@@ -1,0 +1,1105 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="moritalous">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+    
+    
+      
+        <title>最後の仕上げ - WordPressをCDKで構築する</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-orange">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href=".." title="WordPressをCDKで構築する" class="md-header__button md-logo" aria-label="WordPressをCDKで構築する" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WordPressをCDKで構築する
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              最後の仕上げ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="クリア" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/moritalous/wordpress-cdk" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="WordPressをCDKで構築する" class="md-nav__button md-logo" aria-label="WordPressをCDKで構築する" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    WordPressをCDKで構築する
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/moritalous/wordpress-cdk" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          事前準備
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="事前準備" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          事前準備
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setting/" class="md-nav__link">
+        インストール
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-project/" class="md-nav__link">
+        CDKプロジェクトの作成
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          手順
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="手順" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          手順
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-vpc/" class="md-nav__link">
+        VPCを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-ec2/" class="md-nav__link">
+        EC2を作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-rds/" class="md-nav__link">
+        RDSを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-elb/" class="md-nav__link">
+        ELBを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-efs/" class="md-nav__link">
+        EFSを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-autoscaling/" class="md-nav__link">
+        EC2 Auto Scalingを作成
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          追加手順
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="追加手順" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          追加手順
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-route53/" class="md-nav__link">
+        独自ドメインの追加
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-acm/" class="md-nav__link">
+        HTTPS化(AWSの設定)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setting-wordpress-https/" class="md-nav__link">
+        HTTPS化(WordPressの設定)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-cloudfront/" class="md-nav__link">
+        CDN追加
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-cloudfront-https/" class="md-nav__link">
+        CDNの独自ドメイン追加とHTTPS化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          最後の仕上げ
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        最後の仕上げ
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    独自ドメインからのアクセスのみに限定する
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#https" class="md-nav__link">
+    HTTPS接続のみに限定する
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    独自ドメインからのアクセスのみに限定する
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#https" class="md-nav__link">
+    HTTPS接続のみに限定する
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/moritalous/wordpress-cdk/edit/master/docs/finishing.md" title="編集" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+  <h1>最後の仕上げ</h1>
+
+<h2 id="_1">独自ドメインからのアクセスのみに限定する</h2>
+<p>これまでの設定で、WordPressへアクセスする宛先が複数出てきました。
+最終的にはCloudFrontに設定した独自ドメイン以外からのアクセスを以下のルールで防ぎます。</p>
+<table>
+<thead>
+<tr>
+<th align="right">No.</th>
+<th>AWSサービス</th>
+<th>宛先</th>
+<th>アクセス可否ルール</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">1</td>
+<td>EC2</td>
+<td>パブリックIPアドレス</td>
+<td>ブロック</td>
+</tr>
+<tr>
+<td align="right">2</td>
+<td>EC2</td>
+<td>AWS生成ドメイン</td>
+<td>ブロック</td>
+</tr>
+<tr>
+<td align="right">3</td>
+<td>ELB</td>
+<td>AWS生成ドメイン</td>
+<td>CloudFrontの独自ドメインにリダイレクト</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>ELB</td>
+<td>独自ドメイン</td>
+<td>CloudFrontの独自ドメインにリダイレクト</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>CloudFront</td>
+<td>AWS生成ドメイン</td>
+<td>CloudFrontの独自ドメインにリダイレクト</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>CloudFront</td>
+<td>独自ドメイン</td>
+<td>アクセス許可</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>EC2への直接アクセスをブロック（No.1,2）</p>
+<p>EC2のセキュリティグループで許可しない（＝禁止する）</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-cdk/lib/wordpress-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-32">32</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-0-32" name="__codelineno-0-32"></a><span class="c1">// ec2_sg.addIngressRule(aws_ec2.Peer.anyIpv4(), aws_ec2.Port.tcp(80))</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+<li>
+<p>CloudFront独自ドメインにリダイレクト（No.3,4,5）</p>
+<p>ELBのリスナールールを設定<br />
+HOSTヘッダーが一致したらリダイレクト</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-cdk/lib/wordpress-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span>
+<span class="normal"><a href="#__codelineno-1-54">54</a></span>
+<span class="normal"><a href="#__codelineno-1-55">55</a></span>
+<span class="normal"><a href="#__codelineno-1-56">56</a></span>
+<span class="normal"><a href="#__codelineno-1-57">57</a></span>
+<span class="normal"><a href="#__codelineno-1-58">58</a></span>
+<span class="normal"><a href="#__codelineno-1-59">59</a></span>
+<span class="normal"><a href="#__codelineno-1-60">60</a></span>
+<span class="normal"><a href="#__codelineno-1-61">61</a></span>
+<span class="normal"><a href="#__codelineno-1-62">62</a></span>
+<span class="normal"><a href="#__codelineno-1-63">63</a></span>
+<span class="normal"><a href="#__codelineno-1-64">64</a></span>
+<span class="normal"><a href="#__codelineno-1-65">65</a></span>
+<span class="normal"><a href="#__codelineno-1-66">66</a></span>
+<span class="normal"><a href="#__codelineno-1-67">67</a></span>
+<span class="normal"><a href="#__codelineno-1-68">68</a></span>
+<span class="normal"><a href="#__codelineno-1-69">69</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="kd">const</span> <span class="nx">listener_http</span> <span class="o">=</span> <span class="nx">elb</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;Listener_http&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>  <span class="nx">port</span>: <span class="kt">80</span><span class="p">,</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>  <span class="nx">open</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>  <span class="nx">defaultTargetGroups</span><span class="o">:</span> <span class="p">[</span><span class="nx">elb_targetgroup</span><span class="p">],</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="p">})</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="kd">const</span> <span class="nx">listener_https</span> <span class="o">=</span> <span class="nx">elb</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;Listener_https&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>  <span class="nx">port</span>: <span class="kt">443</span><span class="p">,</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>  <span class="nx">open</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a>  <span class="nx">certificates</span><span class="o">:</span> <span class="p">[</span><span class="nx">elb_cert</span><span class="p">],</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>  <span class="nx">defaultTargetGroups</span><span class="o">:</span> <span class="p">[</span><span class="nx">elb_targetgroup</span><span class="p">],</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="p">})</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationListenerRule</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;listener_http_rule&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a>  <span class="nx">listener</span>: <span class="kt">listener_http</span><span class="p">,</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a>  <span class="nx">priority</span>: <span class="kt">10</span><span class="p">,</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a><span class="hll">  <span class="nx">conditions</span><span class="o">:</span> <span class="p">[</span>
+</span><a id="__codelineno-1-49" name="__codelineno-1-49"></a><span class="hll">    <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ListenerCondition</span><span class="p">.</span><span class="nx">hostHeaders</span><span class="p">(</span>
+</span><a id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="hll">      <span class="p">[</span><span class="nx">elb</span><span class="p">.</span><span class="nx">loadBalancerDnsName</span><span class="p">,</span> <span class="s1">&#39;elb.wordpress-cdk.tk&#39;</span><span class="p">,</span> <span class="nx">cloudfront</span><span class="p">.</span><span class="nx">domainName</span><span class="p">])</span>
+</span><a id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="hll">  <span class="p">],</span>
+</span><a id="__codelineno-1-52" name="__codelineno-1-52"></a><span class="hll">  <span class="nx">action</span>: <span class="kt">aws_elasticloadbalancingv2.ListenerAction.redirect</span><span class="p">({</span>
+</span><a id="__codelineno-1-53" name="__codelineno-1-53"></a><span class="hll">    <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+</span><a id="__codelineno-1-54" name="__codelineno-1-54"></a><span class="hll">    <span class="nx">permanent</span>: <span class="kt">true</span><span class="p">,</span>
+</span><a id="__codelineno-1-55" name="__codelineno-1-55"></a><span class="hll">  <span class="p">})</span>
+</span><a id="__codelineno-1-56" name="__codelineno-1-56"></a><span class="p">})</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57"></a>
+<a id="__codelineno-1-58" name="__codelineno-1-58"></a><span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationListenerRule</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;listener_https_rule&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59"></a>  <span class="nx">listener</span>: <span class="kt">listener_https</span><span class="p">,</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60"></a>  <span class="nx">priority</span>: <span class="kt">10</span><span class="p">,</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="hll">  <span class="nx">conditions</span><span class="o">:</span> <span class="p">[</span>
+</span><a id="__codelineno-1-62" name="__codelineno-1-62"></a><span class="hll">    <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ListenerCondition</span><span class="p">.</span><span class="nx">hostHeaders</span><span class="p">(</span>
+</span><a id="__codelineno-1-63" name="__codelineno-1-63"></a><span class="hll">      <span class="p">[</span><span class="nx">elb</span><span class="p">.</span><span class="nx">loadBalancerDnsName</span><span class="p">,</span> <span class="s1">&#39;elb.wordpress-cdk.tk&#39;</span><span class="p">,</span> <span class="nx">cloudfront</span><span class="p">.</span><span class="nx">domainName</span><span class="p">])</span>
+</span><a id="__codelineno-1-64" name="__codelineno-1-64"></a><span class="hll">  <span class="p">],</span>
+</span><a id="__codelineno-1-65" name="__codelineno-1-65"></a><span class="hll">  <span class="nx">action</span>: <span class="kt">aws_elasticloadbalancingv2.ListenerAction.redirect</span><span class="p">({</span>
+</span><a id="__codelineno-1-66" name="__codelineno-1-66"></a><span class="hll">    <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+</span><a id="__codelineno-1-67" name="__codelineno-1-67"></a><span class="hll">    <span class="nx">permanent</span>: <span class="kt">true</span><span class="p">,</span>
+</span><a id="__codelineno-1-68" name="__codelineno-1-68"></a><span class="hll">  <span class="p">})</span>
+</span><a id="__codelineno-1-69" name="__codelineno-1-69"></a><span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+</li>
+</ol>
+<p>確認</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">ELB AWS生成ドメイン</label><label for="__tabbed_1_2">ELB 独自ドメイン</label><label for="__tabbed_1_3">CloudFront AWS生成ドメイン</label><label for="__tabbed_1_4">CloudFront 独自ドメイン</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl -v http://Wordp-elb83-1TT135MDVLZ3N-1130701054.ap-northeast-1.elb.amazonaws.com
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>*   Trying 35.75.128.36:80...
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>* TCP_NODELAY set
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>* Connected to Wordp-elb83-1TT135MDVLZ3N-1130701054.ap-northeast-1.elb.amazonaws.com (35.75.128.36) port 80 (#0)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>&gt; GET / HTTP/1.1
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>&gt; Host: Wordp-elb83-1TT135MDVLZ3N-1130701054.ap-northeast-1.elb.amazonaws.com
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>&gt; User-Agent: curl/7.68.0
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>&gt; Accept: */*
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>&gt; 
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>* Mark bundle as not supporting multiuse
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>&lt; HTTP/1.1 301 Moved Permanently
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>&lt; Server: awselb/2.0
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>&lt; Date: Wed, 04 May 2022 05:21:44 GMT
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>&lt; Content-Type: text/html
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>&lt; Content-Length: 134
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>&lt; Connection: keep-alive
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>&lt; Location: http://www.wordpress-cdk.tk:80/
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>&lt; 
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>&lt;html&gt;
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>&lt;body&gt;
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>&lt;center&gt;&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;&lt;/center&gt;
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>&lt;/body&gt;
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>&lt;/html&gt;
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>* Connection #0 to host Wordp-elb83-1TT135MDVLZ3N-1130701054.ap-northeast-1.elb.amazonaws.com left intact
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl -v http://elb.wordpress-cdk.tk
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>*   Trying 54.250.174.110:80...
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>* TCP_NODELAY set
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>* Connected to elb.wordpress-cdk.tk (54.250.174.110) port 80 (#0)
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>&gt; GET / HTTP/1.1
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>&gt; Host: elb.wordpress-cdk.tk
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>&gt; User-Agent: curl/7.68.0
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>&gt; Accept: */*
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>&gt; 
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>* Mark bundle as not supporting multiuse
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>&lt; HTTP/1.1 301 Moved Permanently
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>&lt; Server: awselb/2.0
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>&lt; Date: Wed, 04 May 2022 05:22:32 GMT
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>&lt; Content-Type: text/html
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>&lt; Content-Length: 134
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>&lt; Connection: keep-alive
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>&lt; Location: http://www.wordpress-cdk.tk:80/
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>&lt; 
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>&lt;html&gt;
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>&lt;body&gt;
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>&lt;center&gt;&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;&lt;/center&gt;
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>&lt;/body&gt;
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>&lt;/html&gt;
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>* Connection #0 to host elb.wordpress-cdk.tk left intact
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>curl -v http://d2rgr0fwcf5dr7.cloudfront.net
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>*   Trying 18.65.123.50:80...
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>* TCP_NODELAY set
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>* Connected to d2rgr0fwcf5dr7.cloudfront.net (18.65.123.50) port 80 (#0)
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>&gt; GET / HTTP/1.1
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>&gt; Host: d2rgr0fwcf5dr7.cloudfront.net
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>&gt; User-Agent: curl/7.68.0
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>&gt; Accept: */*
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>&gt; 
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>* Mark bundle as not supporting multiuse
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>&lt; HTTP/1.1 301 Moved Permanently
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>&lt; Content-Type: text/html
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>&lt; Content-Length: 134
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>&lt; Connection: keep-alive
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>&lt; Server: awselb/2.0
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>&lt; Date: Wed, 04 May 2022 05:23:03 GMT
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>&lt; Location: https://www.wordpress-cdk.tk:443/
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>&lt; X-Cache: Miss from cloudfront
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>&lt; Via: 1.1 a9715fbde86b226b6436617aa33710cc.cloudfront.net (CloudFront)
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>&lt; X-Amz-Cf-Pop: KIX50-P3
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>&lt; X-Amz-Cf-Id: -H8dpDTFP4ZjsNbpsrtW7UkRKwjolKLPKpzmVm0qTTYfimI5ujZSXA==
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>&lt; 
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>&lt;html&gt;
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>&lt;body&gt;
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>&lt;center&gt;&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;&lt;/center&gt;
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>&lt;/body&gt;
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>&lt;/html&gt;
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>* Connection #0 to host d2rgr0fwcf5dr7.cloudfront.net left intact
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl -v http://www.wordpress-cdk.tk
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>*   Trying 13.32.50.103:80...
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>* TCP_NODELAY set
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>* Connected to www.wordpress-cdk.tk (13.32.50.103) port 80 (#0)
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>&gt; GET / HTTP/1.1
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>&gt; Host: www.wordpress-cdk.tk
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>&gt; User-Agent: curl/7.68.0
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>&gt; Accept: */*
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>&gt; 
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>* Mark bundle as not supporting multiuse
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>&lt; HTTP/1.1 302 Found
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>&lt; Content-Type: text/html; charset=UTF-8
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>&lt; Content-Length: 0
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>&lt; Connection: keep-alive
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>&lt; Date: Wed, 04 May 2022 05:25:39 GMT
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>&lt; Server: Apache/2.4.53 ()
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>&lt; X-Powered-By: PHP/7.2.34
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>&lt; Location: http://www.wordpress-cdk.tk/wp-admin/setup-config.php
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>&lt; X-Cache: Miss from cloudfront
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>&lt; Via: 1.1 a2447ed6669558ff303af177568ddb72.cloudfront.net (CloudFront)
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>&lt; X-Amz-Cf-Pop: NRT57-C1
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>&lt; X-Amz-Cf-Id: sPrq1LoZtFYma4tCKAdSa_ci7Od9hudO7PTtW0kh0T12axvUllaeGA==
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>&lt; 
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>* Connection #0 to host www.wordpress-cdk.tk left intact
+</code></pre></div></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>この場合も302で転送されていますが、初期設定前なのでWordPressの初期設定画面に転送されています。</p>
+</div>
+</div>
+</div>
+</div>
+<h2 id="https">HTTPS接続のみに限定する</h2>
+<p>せっかくSSL対応したので、HTTPでアクセスが来た場合にHTTPSにリダイレクトするように設定しましょう</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>WordPressのSSL化設定が完了してからHTTPSのみに限定しましょう。</p>
+</div>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-cdk/lib/wordpress-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-193">193</a></span>
+<span class="normal"><a href="#__codelineno-10-194">194</a></span>
+<span class="normal"><a href="#__codelineno-10-195">195</a></span>
+<span class="normal"><a href="#__codelineno-10-196">196</a></span>
+<span class="normal"><a href="#__codelineno-10-197">197</a></span>
+<span class="normal"><a href="#__codelineno-10-198">198</a></span>
+<span class="normal"><a href="#__codelineno-10-199">199</a></span>
+<span class="normal"><a href="#__codelineno-10-200">200</a></span>
+<span class="normal"><a href="#__codelineno-10-201">201</a></span>
+<span class="normal"><a href="#__codelineno-10-202">202</a></span>
+<span class="normal"><a href="#__codelineno-10-203">203</a></span>
+<span class="normal"><a href="#__codelineno-10-204">204</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-10-193" name="__codelineno-10-193"></a>    <span class="kd">const</span> <span class="nx">cloudfront</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_cloudfront</span><span class="p">.</span><span class="nx">Distribution</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cloudfront&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-10-194" name="__codelineno-10-194"></a>      <span class="nx">defaultBehavior</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-10-195" name="__codelineno-10-195"></a>        <span class="nx">origin</span>: <span class="kt">new</span> <span class="nx">aws_cloudfront_origins</span><span class="p">.</span><span class="nx">HttpOrigin</span><span class="p">(</span><span class="s2">&quot;elb.wordpress-cdk.tk&quot;</span><span class="p">),</span>
+<a id="__codelineno-10-196" name="__codelineno-10-196"></a>        <span class="nx">allowedMethods</span>: <span class="kt">aws_cloudfront.AllowedMethods.ALLOW_ALL</span><span class="p">,</span>
+<a id="__codelineno-10-197" name="__codelineno-10-197"></a>        <span class="nx">cachedMethods</span>: <span class="kt">aws_cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS</span><span class="p">,</span>
+<a id="__codelineno-10-198" name="__codelineno-10-198"></a><span class="hll">        <span class="nx">viewerProtocolPolicy</span>: <span class="kt">aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS</span>
+</span><a id="__codelineno-10-199" name="__codelineno-10-199"></a>        <span class="nx">cachePolicy</span>: <span class="kt">aws_cloudfront.CachePolicy.CACHING_OPTIMIZED</span><span class="p">,</span>
+<a id="__codelineno-10-200" name="__codelineno-10-200"></a>        <span class="nx">originRequestPolicy</span>: <span class="kt">aws_cloudfront.OriginRequestPolicy.ALL_VIEWER</span><span class="p">,</span>
+<a id="__codelineno-10-201" name="__codelineno-10-201"></a>      <span class="p">},</span>
+<a id="__codelineno-10-202" name="__codelineno-10-202"></a>      <span class="nx">domainNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">],</span>
+<a id="__codelineno-10-203" name="__codelineno-10-203"></a>      <span class="nx">certificate</span>: <span class="kt">cloudfront_cert</span>
+<a id="__codelineno-10-204" name="__codelineno-10-204"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<p>ViewerProtocolPolicyを<code>ALLOW_ALL</code>から<code>REDIRECT_TO_HTTPS</code>に変更するだけです。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">CloudFront 独自ドメインへHTTP接続</label><label for="__tabbed_2_2">CloudFront 独自ドメインへHTTPS接続</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl -v http://www.wordpress-cdk.tk
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>*   Trying 13.35.49.75:80...
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>* TCP_NODELAY set
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>* Connected to www.wordpress-cdk.tk (13.35.49.75) port 80 (#0)
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>&gt; GET / HTTP/1.1
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>&gt; Host: www.wordpress-cdk.tk
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>&gt; User-Agent: curl/7.68.0
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>&gt; Accept: */*
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>&gt; 
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>* Mark bundle as not supporting multiuse
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>&lt; HTTP/1.1 301 Moved Permanently
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>&lt; Server: CloudFront
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>&lt; Date: Wed, 04 May 2022 05:35:34 GMT
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>&lt; Content-Type: text/html
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>&lt; Content-Length: 183
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>&lt; Connection: keep-alive
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>&lt; Location: https://www.wordpress-cdk.tk/
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>&lt; X-Cache: Redirect from cloudfront
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>&lt; Via: 1.1 4da2bc835e000996f0b384c9db0412cc.cloudfront.net (CloudFront)
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>&lt; X-Amz-Cf-Pop: NRT20-C1
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>&lt; X-Amz-Cf-Id: fYs-ClGPQl6YUaZrkAe8h30z83xkw7yf1skElwdShSSqcb6hb14luA==
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>&lt; 
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>&lt;html&gt;
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>&lt;head&gt;&lt;title&gt;301 Moved Permanently&lt;/title&gt;&lt;/head&gt;
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>&lt;body bgcolor=&quot;white&quot;&gt;
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>&lt;center&gt;&lt;h1&gt;301 Moved Permanently&lt;/h1&gt;&lt;/center&gt;
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>&lt;hr&gt;&lt;center&gt;CloudFront&lt;/center&gt;
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>&lt;/body&gt;
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>&lt;/html&gt;
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>* Connection #0 to host www.wordpress-cdk.tk left intact
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl -v https://www.wordpress-cdk.tk
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>*   Trying 13.35.49.75:443...
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>* TCP_NODELAY set
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>* Connected to www.wordpress-cdk.tk (13.35.49.75) port 443 (#0)
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>* ALPN, offering h2
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>* ALPN, offering http/1.1
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>* successfully set certificate verify locations:
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>*   CAfile: /etc/ssl/certs/ca-certificates.crt
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>CApath: /etc/ssl/certs
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>* TLSv1.3 (IN), TLS handshake, Server hello (2):
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>* TLSv1.3 (IN), TLS handshake, Certificate (11):
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>* TLSv1.3 (IN), TLS handshake, Finished (20):
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>* TLSv1.3 (OUT), TLS handshake, Finished (20):
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>* ALPN, server accepted to use h2
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>* Server certificate:
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>*  subject: CN=www.wordpress-cdk.tk
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>*  start date: May  4 00:00:00 2022 GMT
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>*  expire date: Jun  3 23:59:59 2023 GMT
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>*  subjectAltName: host &quot;www.wordpress-cdk.tk&quot; matched cert&#39;s &quot;www.wordpress-cdk.tk&quot;
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>*  issuer: C=US; O=Amazon; OU=Server CA 1B; CN=Amazon
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>*  SSL certificate verify ok.
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a>* Using HTTP2, server supports multi-use
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>* Connection state changed (HTTP/2 confirmed)
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a>* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a>* Using Stream ID: 1 (easy handle 0x5556c248fe10)
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>&gt; GET / HTTP/2
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a>&gt; Host: www.wordpress-cdk.tk
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>&gt; user-agent: curl/7.68.0
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>&gt; accept: */*
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a>&gt; 
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>* Connection state changed (MAX_CONCURRENT_STREAMS == 128)!
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>&lt; HTTP/2 302 
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>&lt; content-type: text/html; charset=UTF-8
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>&lt; content-length: 0
+<a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>&lt; location: http://www.wordpress-cdk.tk/wp-admin/setup-config.php
+<a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a>&lt; date: Wed, 04 May 2022 05:36:05 GMT
+<a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a>&lt; server: Apache/2.4.53 ()
+<a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a>&lt; x-powered-by: PHP/7.2.34
+<a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a>&lt; x-cache: Miss from cloudfront
+<a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a>&lt; via: 1.1 d8d967e8190a369930c2613d498c9db8.cloudfront.net (CloudFront)
+<a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a>&lt; x-amz-cf-pop: NRT20-C1
+<a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a>&lt; x-amz-cf-id: F4zOC-9FsS3sA7SDAMHHseItlrbShmyzUCgxCtbzYJgDGXlU1nAqqQ==
+<a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a>&lt; 
+<a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a>* Connection #0 to host www.wordpress-cdk.tk left intact
+</code></pre></div></p>
+</div>
+</div>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="フッター">
+      
+        
+        <a href="../create-cloudfront-https/" class="md-footer__link md-footer__link--prev" aria-label="前: CDNの独自ドメイン追加とHTTPS化" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                前
+              </span>
+              CDNの独自ドメイン追加とHTTPS化
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/moritalous" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.placeholder": "\u691c\u7d22", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      
+    
+  </body>
+</html>
