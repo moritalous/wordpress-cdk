@@ -1,0 +1,66 @@
+site_name: "WordPressをCDKで構築する"
+site_author: moritalous
+
+nav:
+  - TOP: index.md
+  - "事前準備":
+    - "インストール": setting.md
+    - "CDKプロジェクトの作成": create-project.md
+  - "手順":
+    - "VPCを作成": create-vpc.md
+    - "EC2を作成": create-ec2.md
+    - "RDSを作成": create-rds.md
+    - "ELBを作成": create-elb.md
+    - "EFSを作成": create-efs.md
+    - "EC2 Auto Scalingを作成": create-autoscaling.md
+  - "追加手順":
+    - "独自ドメインの追加": create-route53.md
+    - "HTTPS化(AWSの設定)": create-acm.md
+    - "HTTPS化(WordPressの設定)": setting-wordpress-https.md
+    - "CDN追加": create-cloudfront.md
+    - "CDNの独自ドメイン追加とHTTPS化": create-cloudfront-https.md
+    - "最後の仕上げ": finishing.md
+
+repo_url: https://github.com/moritalous/wordpress-cdk
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter 
+      link: https://twitter.com/moritalous
+
+theme:
+  language: ja
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep orange
+      toggle:
+        icon: material/toggle-switch-off-outline 
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate 
+      primary: deep purple
+      accent: deep orange
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.tilde
+  - tables
