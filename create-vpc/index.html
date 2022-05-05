@@ -399,6 +399,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ソースコード
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -661,6 +668,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    ソースコード
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -814,6 +828,28 @@
 <p class="admonition-title">Warning</p>
 <p>NATゲートウェイあり状態でdeployしたのち、NATゲートウェイなしに変更するとサブネットの重複が発生し、デプロイに失敗します。こういった場合は一度<code>cdk destroy</code>でリソースをすべて削除した後、再度<code>cdk deploy</code>を実行します。</p>
 </div>
+<h2 id="_3">ソースコード</h2>
+<details class="abstract">
+<summary>ソースコード</summary>
+<div class="highlight"><span class="filename">wordpress-cdk/lib/wordpress-cdk-stack.ts</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">aws_ec2</span><span class="p">,</span> <span class="nx">Stack</span><span class="p">,</span> <span class="nx">StackProps</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;aws-cdk-lib&#39;</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">Construct</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;constructs&#39;</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">export</span> <span class="kd">class</span> <span class="nx">WordpressCdkStack</span> <span class="k">extends</span> <span class="nx">Stack</span> <span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  <span class="kr">constructor</span><span class="p">(</span><span class="nx">scope</span>: <span class="kt">Construct</span><span class="p">,</span> <span class="nx">id</span>: <span class="kt">string</span><span class="p">,</span> <span class="nx">props?</span>: <span class="kt">StackProps</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="k">super</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="c1">// VPC</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="kd">const</span> <span class="nx">vpc</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Vpc</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;VPC&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>      <span class="nx">natGateways</span>: <span class="kt">0</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="p">})</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>  <span class="p">}</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="p">}</span>
+</code></pre></div>
+</details>
 
               
             </article>

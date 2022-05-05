@@ -566,6 +566,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ソースコード
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -615,6 +622,13 @@
         <li class="md-nav__item">
   <a href="#https" class="md-nav__link">
     HTTPS接続のみに限定する
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ソースコード
   </a>
   
 </li>
@@ -1032,6 +1046,383 @@ HOSTヘッダーが一致したらリダイレクト</p>
 </div>
 </div>
 </div>
+<h2 id="_2">ソースコード</h2>
+<details class="abstract">
+<summary>ソースコード</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">bin/wordpress-cdk.ts</label><label for="__tabbed_3_2">lib/wordpress-cdk-stack.ts</label><label for="__tabbed_3_3">lib/wordpress-cdk-stack-us-east-1.ts</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="ch">#!/usr/bin/env node</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">import</span> <span class="s1">&#39;source-map-support/register&#39;</span><span class="p">;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">cdk</span> <span class="kr">from</span> <span class="s1">&#39;aws-cdk-lib&#39;</span><span class="p">;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">WordpressCdkStack</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;../lib/wordpress-cdk-stack&#39;</span><span class="p">;</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">WordpressCdkUsEast1Stack</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;../lib/wordpress-cdk-stack-us-east-1&#39;</span><span class="p">;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">cdk</span><span class="p">.</span><span class="nx">App</span><span class="p">();</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="ow">new</span> <span class="nx">WordpressCdkUsEast1Stack</span><span class="p">(</span><span class="nx">app</span><span class="p">,</span> <span class="s1">&#39;WordpressCdkUsEast1Stack&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>  <span class="nx">env</span><span class="o">:</span> <span class="p">{</span><span class="nx">region</span><span class="o">:</span> <span class="s1">&#39;us-east-1&#39;</span><span class="p">}</span>  
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="p">})</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="ow">new</span> <span class="nx">WordpressCdkStack</span><span class="p">(</span><span class="nx">app</span><span class="p">,</span> <span class="s1">&#39;WordpressCdkStack&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>  <span class="cm">/* If you don&#39;t specify &#39;env&#39;, this stack will be environment-agnostic.</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="cm">   * Account/Region-dependent features and context lookups will not work,</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="cm">   * but a single synthesized template can be deployed anywhere. */</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>  <span class="cm">/* Uncomment the next line to specialize this stack for the AWS Account</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="cm">   * and Region that are implied by the current CLI configuration. */</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>  <span class="c1">// env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>  <span class="cm">/* Uncomment the next line if you know exactly what Account and Region you</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="cm">   * want to deploy the stack to. */</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>  <span class="c1">// env: { account: &#39;123456789012&#39;, region: &#39;us-east-1&#39; },</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>  <span class="cm">/* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="p">});</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">aws_autoscaling</span><span class="p">,</span> <span class="nx">aws_certificatemanager</span><span class="p">,</span> <span class="nx">aws_cloudfront</span><span class="p">,</span> <span class="nx">aws_cloudfront_origins</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">,</span> <span class="nx">aws_efs</span><span class="p">,</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">,</span> <span class="nx">aws_elasticloadbalancingv2_targets</span><span class="p">,</span> <span class="nx">aws_iam</span><span class="p">,</span> <span class="nx">aws_rds</span><span class="p">,</span> <span class="nx">aws_route53</span><span class="p">,</span> <span class="nx">aws_route53_targets</span><span class="p">,</span> <span class="nx">CfnOutput</span><span class="p">,</span> <span class="nx">RemovalPolicy</span><span class="p">,</span> <span class="nx">Stack</span><span class="p">,</span> <span class="nx">StackProps</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;aws-cdk-lib&#39;</span><span class="p">;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">Construct</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;constructs&#39;</span><span class="p">;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">export</span> <span class="kd">class</span> <span class="nx">WordpressCdkStack</span> <span class="k">extends</span> <span class="nx">Stack</span> <span class="p">{</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>  <span class="kr">constructor</span><span class="p">(</span><span class="nx">scope</span>: <span class="kt">Construct</span><span class="p">,</span> <span class="nx">id</span>: <span class="kt">string</span><span class="p">,</span> <span class="nx">props?</span>: <span class="kt">StackProps</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    <span class="k">super</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>    <span class="c1">// VPC</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>    <span class="kd">const</span> <span class="nx">vpc</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Vpc</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;VPC&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>      <span class="nx">natGateways</span>: <span class="kt">0</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>    <span class="p">})</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>    <span class="c1">// EFS</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>    <span class="kd">const</span> <span class="nx">efs</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_efs</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;efs&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>      <span class="nx">removalPolicy</span>: <span class="kt">RemovalPolicy.DESTROY</span><span class="p">,</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>    <span class="p">})</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>    <span class="c1">// EC2</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>    <span class="kd">const</span> <span class="nx">ec2_sg</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">SecurityGroup</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;ec2-sg&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>    <span class="p">})</span>
+<a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a>    <span class="c1">// ec2_sg.addIngressRule(aws_ec2.Peer.anyIpv4(), aws_ec2.Port.tcp(80))</span>
+<a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>
+<a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a>    <span class="kd">const</span> <span class="nx">ec2_role</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_iam</span><span class="p">.</span><span class="nx">Role</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;wordpress-role&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a>      <span class="nx">assumedBy</span>: <span class="kt">new</span> <span class="nx">aws_iam</span><span class="p">.</span><span class="nx">ServicePrincipal</span><span class="p">(</span><span class="s1">&#39;ec2.amazonaws.com&#39;</span><span class="p">),</span>
+<a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a>      <span class="nx">managedPolicies</span><span class="o">:</span> <span class="p">[</span>
+<a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a>        <span class="nx">aws_iam</span><span class="p">.</span><span class="nx">ManagedPolicy</span><span class="p">.</span><span class="nx">fromAwsManagedPolicyName</span><span class="p">(</span><span class="s1">&#39;AmazonSSMManagedInstanceCore&#39;</span><span class="p">),</span>
+<a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a>      <span class="p">],</span>
+<a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a>    <span class="p">})</span>
+<a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a>
+<a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a>    <span class="kd">const</span> <span class="nx">ec2_user_data</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">MultipartUserData</span><span class="p">()</span>
+<a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a>    <span class="kd">const</span> <span class="nx">ec2_command</span> <span class="o">=</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">UserData</span><span class="p">.</span><span class="nx">forLinux</span><span class="p">()</span>
+<a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a>    <span class="nx">ec2_user_data</span><span class="p">.</span><span class="nx">addUserDataPart</span><span class="p">(</span><span class="nx">ec2_command</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">MultipartBody</span><span class="p">.</span><span class="nx">SHELL_SCRIPT</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+<a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a>    <span class="nx">ec2_command</span><span class="p">.</span><span class="nx">addCommands</span><span class="p">(</span>
+<a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a>      <span class="s2">&quot;#!/bin/bash&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a>      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a>      <span class="s2">&quot;yum update -y&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a>      <span class="s2">&quot;amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a>      <span class="s2">&quot;yum install -y httpd&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a>      <span class="c1">// efs</span>
+<a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a>      <span class="s2">&quot;yum install -y amazon-efs-utils&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a>      <span class="s2">&quot;yum install -y nfs-utils&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a>      <span class="s2">&quot;file_system_id_1=&quot;</span> <span class="o">+</span> <span class="nx">efs</span><span class="p">.</span><span class="nx">fileSystemId</span><span class="p">,</span>
+<a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a>      <span class="s2">&quot;efs_mount_point_1=/var/www/html&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a>      <span class="s2">&quot;mkdir -p \&quot;${efs_mount_point_1}\&quot;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a>      <span class="s2">&quot;test -f \&quot;/sbin/mount.efs\&quot; &amp;&amp; echo \&quot;${file_system_id_1}:/ ${efs_mount_point_1} efs defaults,_netdev\&quot; &gt;&gt; /etc/fstab || &quot;</span> <span class="o">+</span>
+<a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a>      <span class="s2">&quot;echo \&quot;${file_system_id_1}.efs.&quot;</span> <span class="o">+</span> <span class="nx">Stack</span><span class="p">.</span><span class="k">of</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">region</span> <span class="o">+</span> <span class="s2">&quot;.amazonaws.com:/ ${efs_mount_point_1} nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0\&quot; &gt;&gt; /etc/fstab&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a>      <span class="s2">&quot;mount -a -t efs,nfs4 defaults&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a>      <span class="c1">// efs</span>
+<a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a>      <span class="s2">&quot;systemctl enable httpd&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a>      <span class="s2">&quot;systemctl start httpd&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-62" name="__codelineno-16-62" href="#__codelineno-16-62"></a>      <span class="s2">&quot;wget https://wordpress.org/latest.tar.gz&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-63" name="__codelineno-16-63" href="#__codelineno-16-63"></a>      <span class="s2">&quot;tar -xzf latest.tar.gz&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-64" name="__codelineno-16-64" href="#__codelineno-16-64"></a>      <span class="s2">&quot;cp -r wordpress/* /var/www/html/&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-65" name="__codelineno-16-65" href="#__codelineno-16-65"></a>      <span class="s2">&quot;chown -R apache /var/www&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-66" name="__codelineno-16-66" href="#__codelineno-16-66"></a>      <span class="s2">&quot;chgrp -R apache /var/www&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-67" name="__codelineno-16-67" href="#__codelineno-16-67"></a>      <span class="s2">&quot;chmod 2775 /var/www&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-68" name="__codelineno-16-68" href="#__codelineno-16-68"></a>      <span class="s2">&quot;find /var/www -type d -exec sudo chmod 2775 {} \;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-69" name="__codelineno-16-69" href="#__codelineno-16-69"></a>      <span class="s2">&quot;find /var/www -type f -exec sudo chmod 0644 {} \;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-70" name="__codelineno-16-70" href="#__codelineno-16-70"></a>    <span class="p">)</span>
+<a id="__codelineno-16-71" name="__codelineno-16-71" href="#__codelineno-16-71"></a>
+<a id="__codelineno-16-72" name="__codelineno-16-72" href="#__codelineno-16-72"></a>    <span class="kd">const</span> <span class="nx">ec2</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Instance</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;wordpress&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-73" name="__codelineno-16-73" href="#__codelineno-16-73"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-74" name="__codelineno-16-74" href="#__codelineno-16-74"></a>      <span class="nx">vpcSubnets</span><span class="o">:</span> <span class="p">{</span> <span class="nx">subnetType</span>: <span class="kt">aws_ec2.SubnetType.PUBLIC</span> <span class="p">},</span>
+<a id="__codelineno-16-75" name="__codelineno-16-75" href="#__codelineno-16-75"></a>      <span class="nx">securityGroup</span>: <span class="kt">ec2_sg</span><span class="p">,</span>
+<a id="__codelineno-16-76" name="__codelineno-16-76" href="#__codelineno-16-76"></a>
+<a id="__codelineno-16-77" name="__codelineno-16-77" href="#__codelineno-16-77"></a>      <span class="nx">instanceType</span>: <span class="kt">aws_ec2.InstanceType.of</span><span class="p">(</span><span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">InstanceClass</span><span class="p">.</span><span class="nx">T3</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">InstanceSize</span><span class="p">.</span><span class="nx">SMALL</span><span class="p">),</span>
+<a id="__codelineno-16-78" name="__codelineno-16-78" href="#__codelineno-16-78"></a>      <span class="nx">machineImage</span>: <span class="kt">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">AmazonLinuxImage</span><span class="p">({</span> <span class="nx">generation</span>: <span class="kt">aws_ec2.AmazonLinuxGeneration.AMAZON_LINUX_2</span> <span class="p">}),</span>
+<a id="__codelineno-16-79" name="__codelineno-16-79" href="#__codelineno-16-79"></a>
+<a id="__codelineno-16-80" name="__codelineno-16-80" href="#__codelineno-16-80"></a>      <span class="nx">role</span>: <span class="kt">ec2_role</span><span class="p">,</span>
+<a id="__codelineno-16-81" name="__codelineno-16-81" href="#__codelineno-16-81"></a>
+<a id="__codelineno-16-82" name="__codelineno-16-82" href="#__codelineno-16-82"></a>      <span class="nx">userData</span>: <span class="kt">ec2_user_data</span>
+<a id="__codelineno-16-83" name="__codelineno-16-83" href="#__codelineno-16-83"></a>    <span class="p">})</span>
+<a id="__codelineno-16-84" name="__codelineno-16-84" href="#__codelineno-16-84"></a>
+<a id="__codelineno-16-85" name="__codelineno-16-85" href="#__codelineno-16-85"></a>    <span class="nx">efs</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowDefaultPortFrom</span><span class="p">(</span><span class="nx">ec2</span><span class="p">)</span>
+<a id="__codelineno-16-86" name="__codelineno-16-86" href="#__codelineno-16-86"></a>
+<a id="__codelineno-16-87" name="__codelineno-16-87" href="#__codelineno-16-87"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-88" name="__codelineno-16-88" href="#__codelineno-16-88"></a>    <span class="c1">// RDS</span>
+<a id="__codelineno-16-89" name="__codelineno-16-89" href="#__codelineno-16-89"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-90" name="__codelineno-16-90" href="#__codelineno-16-90"></a>
+<a id="__codelineno-16-91" name="__codelineno-16-91" href="#__codelineno-16-91"></a>    <span class="kd">const</span> <span class="nx">rds</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_rds</span><span class="p">.</span><span class="nx">DatabaseInstance</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;Database&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-92" name="__codelineno-16-92" href="#__codelineno-16-92"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-93" name="__codelineno-16-93" href="#__codelineno-16-93"></a>      <span class="nx">vpcSubnets</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-16-94" name="__codelineno-16-94" href="#__codelineno-16-94"></a>        <span class="nx">subnetType</span>: <span class="kt">aws_ec2.SubnetType.PRIVATE_ISOLATED</span>
+<a id="__codelineno-16-95" name="__codelineno-16-95" href="#__codelineno-16-95"></a>      <span class="p">},</span>
+<a id="__codelineno-16-96" name="__codelineno-16-96" href="#__codelineno-16-96"></a>
+<a id="__codelineno-16-97" name="__codelineno-16-97" href="#__codelineno-16-97"></a>      <span class="nx">multiAz</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-16-98" name="__codelineno-16-98" href="#__codelineno-16-98"></a>
+<a id="__codelineno-16-99" name="__codelineno-16-99" href="#__codelineno-16-99"></a>      <span class="nx">engine</span>: <span class="kt">aws_rds.DatabaseInstanceEngine.mysql</span><span class="p">({</span>
+<a id="__codelineno-16-100" name="__codelineno-16-100" href="#__codelineno-16-100"></a>        <span class="nx">version</span>: <span class="kt">aws_rds.MysqlEngineVersion.VER_8_0_28</span>
+<a id="__codelineno-16-101" name="__codelineno-16-101" href="#__codelineno-16-101"></a>      <span class="p">}),</span>
+<a id="__codelineno-16-102" name="__codelineno-16-102" href="#__codelineno-16-102"></a>      <span class="nx">instanceType</span>: <span class="kt">aws_ec2.InstanceType.of</span><span class="p">(</span><span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">InstanceClass</span><span class="p">.</span><span class="nx">BURSTABLE4_GRAVITON</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">InstanceSize</span><span class="p">.</span><span class="nx">LARGE</span><span class="p">),</span>
+<a id="__codelineno-16-103" name="__codelineno-16-103" href="#__codelineno-16-103"></a>
+<a id="__codelineno-16-104" name="__codelineno-16-104" href="#__codelineno-16-104"></a>      <span class="nx">databaseName</span><span class="o">:</span> <span class="s2">&quot;wordpress&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-105" name="__codelineno-16-105" href="#__codelineno-16-105"></a>
+<a id="__codelineno-16-106" name="__codelineno-16-106" href="#__codelineno-16-106"></a>      <span class="nx">allocatedStorage</span>: <span class="kt">20</span>
+<a id="__codelineno-16-107" name="__codelineno-16-107" href="#__codelineno-16-107"></a>    <span class="p">})</span>
+<a id="__codelineno-16-108" name="__codelineno-16-108" href="#__codelineno-16-108"></a>
+<a id="__codelineno-16-109" name="__codelineno-16-109" href="#__codelineno-16-109"></a>    <span class="nx">rds</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowDefaultPortFrom</span><span class="p">(</span><span class="nx">ec2_sg</span><span class="p">)</span>
+<a id="__codelineno-16-110" name="__codelineno-16-110" href="#__codelineno-16-110"></a>    <span class="nx">rds</span><span class="p">.</span><span class="nx">applyRemovalPolicy</span><span class="p">(</span><span class="nx">RemovalPolicy</span><span class="p">.</span><span class="nx">DESTROY</span><span class="p">)</span>
+<a id="__codelineno-16-111" name="__codelineno-16-111" href="#__codelineno-16-111"></a>
+<a id="__codelineno-16-112" name="__codelineno-16-112" href="#__codelineno-16-112"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-113" name="__codelineno-16-113" href="#__codelineno-16-113"></a>    <span class="c1">// EC2 Auto Scaling</span>
+<a id="__codelineno-16-114" name="__codelineno-16-114" href="#__codelineno-16-114"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-115" name="__codelineno-16-115" href="#__codelineno-16-115"></a>
+<a id="__codelineno-16-116" name="__codelineno-16-116" href="#__codelineno-16-116"></a>    <span class="kd">const</span> <span class="nx">asg_user_data</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">MultipartUserData</span><span class="p">()</span>
+<a id="__codelineno-16-117" name="__codelineno-16-117" href="#__codelineno-16-117"></a>    <span class="kd">const</span> <span class="nx">asg_command</span> <span class="o">=</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">UserData</span><span class="p">.</span><span class="nx">forLinux</span><span class="p">()</span>
+<a id="__codelineno-16-118" name="__codelineno-16-118" href="#__codelineno-16-118"></a>    <span class="nx">asg_user_data</span><span class="p">.</span><span class="nx">addUserDataPart</span><span class="p">(</span><span class="nx">asg_command</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">MultipartBody</span><span class="p">.</span><span class="nx">SHELL_SCRIPT</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+<a id="__codelineno-16-119" name="__codelineno-16-119" href="#__codelineno-16-119"></a>    <span class="nx">asg_command</span><span class="p">.</span><span class="nx">addCommands</span><span class="p">(</span>
+<a id="__codelineno-16-120" name="__codelineno-16-120" href="#__codelineno-16-120"></a>      <span class="s2">&quot;#!/bin/bash&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-121" name="__codelineno-16-121" href="#__codelineno-16-121"></a>      <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-122" name="__codelineno-16-122" href="#__codelineno-16-122"></a>      <span class="s2">&quot;yum update -y&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-123" name="__codelineno-16-123" href="#__codelineno-16-123"></a>      <span class="s2">&quot;amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-124" name="__codelineno-16-124" href="#__codelineno-16-124"></a>      <span class="s2">&quot;yum install -y httpd&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-125" name="__codelineno-16-125" href="#__codelineno-16-125"></a>      <span class="c1">// efs</span>
+<a id="__codelineno-16-126" name="__codelineno-16-126" href="#__codelineno-16-126"></a>      <span class="s2">&quot;yum install -y amazon-efs-utils&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-127" name="__codelineno-16-127" href="#__codelineno-16-127"></a>      <span class="s2">&quot;yum install -y nfs-utils&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-128" name="__codelineno-16-128" href="#__codelineno-16-128"></a>      <span class="s2">&quot;file_system_id_1=&quot;</span> <span class="o">+</span> <span class="nx">efs</span><span class="p">.</span><span class="nx">fileSystemId</span><span class="p">,</span>
+<a id="__codelineno-16-129" name="__codelineno-16-129" href="#__codelineno-16-129"></a>      <span class="s2">&quot;efs_mount_point_1=/var/www/html&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-130" name="__codelineno-16-130" href="#__codelineno-16-130"></a>      <span class="s2">&quot;mkdir -p \&quot;${efs_mount_point_1}\&quot;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-131" name="__codelineno-16-131" href="#__codelineno-16-131"></a>      <span class="s2">&quot;test -f \&quot;/sbin/mount.efs\&quot; &amp;&amp; echo \&quot;${file_system_id_1}:/ ${efs_mount_point_1} efs defaults,_netdev\&quot; &gt;&gt; /etc/fstab || &quot;</span> <span class="o">+</span>
+<a id="__codelineno-16-132" name="__codelineno-16-132" href="#__codelineno-16-132"></a>      <span class="s2">&quot;echo \&quot;${file_system_id_1}.efs.&quot;</span> <span class="o">+</span> <span class="nx">Stack</span><span class="p">.</span><span class="k">of</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">region</span> <span class="o">+</span> <span class="s2">&quot;.amazonaws.com:/ ${efs_mount_point_1} nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0\&quot; &gt;&gt; /etc/fstab&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-133" name="__codelineno-16-133" href="#__codelineno-16-133"></a>      <span class="s2">&quot;mount -a -t efs,nfs4 defaults&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-134" name="__codelineno-16-134" href="#__codelineno-16-134"></a>      <span class="c1">// efs</span>
+<a id="__codelineno-16-135" name="__codelineno-16-135" href="#__codelineno-16-135"></a>      <span class="s2">&quot;systemctl enable httpd&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-136" name="__codelineno-16-136" href="#__codelineno-16-136"></a>      <span class="s2">&quot;systemctl start httpd&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-137" name="__codelineno-16-137" href="#__codelineno-16-137"></a>      <span class="s2">&quot;chown -R apache /var/www&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-138" name="__codelineno-16-138" href="#__codelineno-16-138"></a>      <span class="s2">&quot;chgrp -R apache /var/www&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-139" name="__codelineno-16-139" href="#__codelineno-16-139"></a>      <span class="s2">&quot;chmod 2775 /var/www&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-140" name="__codelineno-16-140" href="#__codelineno-16-140"></a>      <span class="s2">&quot;find /var/www -type d -exec sudo chmod 2775 {} \;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-141" name="__codelineno-16-141" href="#__codelineno-16-141"></a>      <span class="s2">&quot;find /var/www -type f -exec sudo chmod 0644 {} \;&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-142" name="__codelineno-16-142" href="#__codelineno-16-142"></a>    <span class="p">)</span>
+<a id="__codelineno-16-143" name="__codelineno-16-143" href="#__codelineno-16-143"></a>
+<a id="__codelineno-16-144" name="__codelineno-16-144" href="#__codelineno-16-144"></a>    <span class="kd">const</span> <span class="nx">asg</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_autoscaling</span><span class="p">.</span><span class="nx">AutoScalingGroup</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;asg&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-145" name="__codelineno-16-145" href="#__codelineno-16-145"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-146" name="__codelineno-16-146" href="#__codelineno-16-146"></a>      <span class="nx">vpcSubnets</span><span class="o">:</span> <span class="p">{</span> <span class="nx">subnetType</span>: <span class="kt">aws_ec2.SubnetType.PUBLIC</span> <span class="p">},</span>
+<a id="__codelineno-16-147" name="__codelineno-16-147" href="#__codelineno-16-147"></a>      <span class="nx">securityGroup</span>: <span class="kt">ec2_sg</span><span class="p">,</span>
+<a id="__codelineno-16-148" name="__codelineno-16-148" href="#__codelineno-16-148"></a>
+<a id="__codelineno-16-149" name="__codelineno-16-149" href="#__codelineno-16-149"></a>      <span class="nx">instanceType</span>: <span class="kt">aws_ec2.InstanceType.of</span><span class="p">(</span><span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">InstanceClass</span><span class="p">.</span><span class="nx">T3</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">InstanceSize</span><span class="p">.</span><span class="nx">SMALL</span><span class="p">),</span>
+<a id="__codelineno-16-150" name="__codelineno-16-150" href="#__codelineno-16-150"></a>      <span class="nx">machineImage</span>: <span class="kt">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">AmazonLinuxImage</span><span class="p">({</span> <span class="nx">generation</span>: <span class="kt">aws_ec2.AmazonLinuxGeneration.AMAZON_LINUX_2</span> <span class="p">}),</span>
+<a id="__codelineno-16-151" name="__codelineno-16-151" href="#__codelineno-16-151"></a>
+<a id="__codelineno-16-152" name="__codelineno-16-152" href="#__codelineno-16-152"></a>      <span class="nx">role</span>: <span class="kt">ec2_role</span><span class="p">,</span>
+<a id="__codelineno-16-153" name="__codelineno-16-153" href="#__codelineno-16-153"></a>
+<a id="__codelineno-16-154" name="__codelineno-16-154" href="#__codelineno-16-154"></a>      <span class="nx">userData</span>: <span class="kt">asg_user_data</span><span class="p">,</span>
+<a id="__codelineno-16-155" name="__codelineno-16-155" href="#__codelineno-16-155"></a>
+<a id="__codelineno-16-156" name="__codelineno-16-156" href="#__codelineno-16-156"></a>      <span class="nx">minCapacity</span>: <span class="kt">1</span><span class="p">,</span>
+<a id="__codelineno-16-157" name="__codelineno-16-157" href="#__codelineno-16-157"></a>      <span class="nx">maxCapacity</span>: <span class="kt">2</span><span class="p">,</span>
+<a id="__codelineno-16-158" name="__codelineno-16-158" href="#__codelineno-16-158"></a>      <span class="nx">desiredCapacity</span>: <span class="kt">2</span><span class="p">,</span>
+<a id="__codelineno-16-159" name="__codelineno-16-159" href="#__codelineno-16-159"></a>
+<a id="__codelineno-16-160" name="__codelineno-16-160" href="#__codelineno-16-160"></a>      <span class="nx">spotPrice</span><span class="o">:</span> <span class="s2">&quot;0.01&quot;</span>
+<a id="__codelineno-16-161" name="__codelineno-16-161" href="#__codelineno-16-161"></a>    <span class="p">})</span>
+<a id="__codelineno-16-162" name="__codelineno-16-162" href="#__codelineno-16-162"></a>
+<a id="__codelineno-16-163" name="__codelineno-16-163" href="#__codelineno-16-163"></a>    <span class="nx">efs</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowDefaultPortFrom</span><span class="p">(</span><span class="nx">asg</span><span class="p">)</span>
+<a id="__codelineno-16-164" name="__codelineno-16-164" href="#__codelineno-16-164"></a>
+<a id="__codelineno-16-165" name="__codelineno-16-165" href="#__codelineno-16-165"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-166" name="__codelineno-16-166" href="#__codelineno-16-166"></a>    <span class="c1">// Route 53</span>
+<a id="__codelineno-16-167" name="__codelineno-16-167" href="#__codelineno-16-167"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-168" name="__codelineno-16-168" href="#__codelineno-16-168"></a>
+<a id="__codelineno-16-169" name="__codelineno-16-169" href="#__codelineno-16-169"></a>    <span class="kd">const</span> <span class="nx">hostedzone</span> <span class="o">=</span> <span class="nx">aws_route53</span><span class="p">.</span><span class="nx">HostedZone</span><span class="p">.</span><span class="nx">fromHostedZoneAttributes</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;hostedzone&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-170" name="__codelineno-16-170" href="#__codelineno-16-170"></a>      <span class="nx">hostedZoneId</span><span class="o">:</span> <span class="s1">&#39;Z0364500207RRL1KGDBUZ&#39;</span><span class="p">,</span>
+<a id="__codelineno-16-171" name="__codelineno-16-171" href="#__codelineno-16-171"></a>      <span class="nx">zoneName</span><span class="o">:</span> <span class="s1">&#39;wordpress-cdk.tk&#39;</span>
+<a id="__codelineno-16-172" name="__codelineno-16-172" href="#__codelineno-16-172"></a>    <span class="p">})</span>
+<a id="__codelineno-16-173" name="__codelineno-16-173" href="#__codelineno-16-173"></a>
+<a id="__codelineno-16-174" name="__codelineno-16-174" href="#__codelineno-16-174"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-175" name="__codelineno-16-175" href="#__codelineno-16-175"></a>    <span class="c1">// Certificate Manager</span>
+<a id="__codelineno-16-176" name="__codelineno-16-176" href="#__codelineno-16-176"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-177" name="__codelineno-16-177" href="#__codelineno-16-177"></a>
+<a id="__codelineno-16-178" name="__codelineno-16-178" href="#__codelineno-16-178"></a>    <span class="kd">const</span> <span class="nx">cloudfront_cert</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_certificatemanager</span><span class="p">.</span><span class="nx">DnsValidatedCertificate</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cloudfront_cert&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-179" name="__codelineno-16-179" href="#__codelineno-16-179"></a>      <span class="nx">hostedZone</span>: <span class="kt">hostedzone</span><span class="p">,</span>
+<a id="__codelineno-16-180" name="__codelineno-16-180" href="#__codelineno-16-180"></a>      <span class="nx">domainName</span><span class="o">:</span> <span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-16-181" name="__codelineno-16-181" href="#__codelineno-16-181"></a>      <span class="nx">region</span><span class="o">:</span> <span class="s1">&#39;us-east-1&#39;</span>
+<a id="__codelineno-16-182" name="__codelineno-16-182" href="#__codelineno-16-182"></a>    <span class="p">})</span>
+<a id="__codelineno-16-183" name="__codelineno-16-183" href="#__codelineno-16-183"></a>
+<a id="__codelineno-16-184" name="__codelineno-16-184" href="#__codelineno-16-184"></a>    <span class="kd">const</span> <span class="nx">elb_cert</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_certificatemanager</span><span class="p">.</span><span class="nx">Certificate</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;elb_cert&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-185" name="__codelineno-16-185" href="#__codelineno-16-185"></a>      <span class="nx">domainName</span><span class="o">:</span> <span class="s1">&#39;elb.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-16-186" name="__codelineno-16-186" href="#__codelineno-16-186"></a>      <span class="nx">validation</span>: <span class="kt">aws_certificatemanager.CertificateValidation.fromDns</span><span class="p">(</span><span class="nx">hostedzone</span><span class="p">)</span>
+<a id="__codelineno-16-187" name="__codelineno-16-187" href="#__codelineno-16-187"></a>    <span class="p">})</span>
+<a id="__codelineno-16-188" name="__codelineno-16-188" href="#__codelineno-16-188"></a>
+<a id="__codelineno-16-189" name="__codelineno-16-189" href="#__codelineno-16-189"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-190" name="__codelineno-16-190" href="#__codelineno-16-190"></a>    <span class="c1">// CloudFront</span>
+<a id="__codelineno-16-191" name="__codelineno-16-191" href="#__codelineno-16-191"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-192" name="__codelineno-16-192" href="#__codelineno-16-192"></a>
+<a id="__codelineno-16-193" name="__codelineno-16-193" href="#__codelineno-16-193"></a>    <span class="kd">const</span> <span class="nx">cloudfront</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_cloudfront</span><span class="p">.</span><span class="nx">Distribution</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cloudfront&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-194" name="__codelineno-16-194" href="#__codelineno-16-194"></a>      <span class="nx">defaultBehavior</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-16-195" name="__codelineno-16-195" href="#__codelineno-16-195"></a>        <span class="nx">origin</span>: <span class="kt">new</span> <span class="nx">aws_cloudfront_origins</span><span class="p">.</span><span class="nx">HttpOrigin</span><span class="p">(</span><span class="s2">&quot;elb.wordpress-cdk.tk&quot;</span><span class="p">),</span>
+<a id="__codelineno-16-196" name="__codelineno-16-196" href="#__codelineno-16-196"></a>        <span class="nx">allowedMethods</span>: <span class="kt">aws_cloudfront.AllowedMethods.ALLOW_ALL</span><span class="p">,</span>
+<a id="__codelineno-16-197" name="__codelineno-16-197" href="#__codelineno-16-197"></a>        <span class="nx">cachedMethods</span>: <span class="kt">aws_cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS</span><span class="p">,</span>
+<a id="__codelineno-16-198" name="__codelineno-16-198" href="#__codelineno-16-198"></a>        <span class="c1">// viewerProtocolPolicy: aws_cloudfront.ViewerProtocolPolicy.ALLOW_ALL,</span>
+<a id="__codelineno-16-199" name="__codelineno-16-199" href="#__codelineno-16-199"></a>        <span class="nx">viewerProtocolPolicy</span>: <span class="kt">aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS</span><span class="p">,</span>
+<a id="__codelineno-16-200" name="__codelineno-16-200" href="#__codelineno-16-200"></a>        <span class="nx">cachePolicy</span>: <span class="kt">aws_cloudfront.CachePolicy.CACHING_OPTIMIZED</span><span class="p">,</span>
+<a id="__codelineno-16-201" name="__codelineno-16-201" href="#__codelineno-16-201"></a>        <span class="nx">originRequestPolicy</span>: <span class="kt">aws_cloudfront.OriginRequestPolicy.ALL_VIEWER</span><span class="p">,</span>
+<a id="__codelineno-16-202" name="__codelineno-16-202" href="#__codelineno-16-202"></a>      <span class="p">},</span>
+<a id="__codelineno-16-203" name="__codelineno-16-203" href="#__codelineno-16-203"></a>      <span class="nx">domainNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">],</span>
+<a id="__codelineno-16-204" name="__codelineno-16-204" href="#__codelineno-16-204"></a>      <span class="nx">certificate</span>: <span class="kt">cloudfront_cert</span>
+<a id="__codelineno-16-205" name="__codelineno-16-205" href="#__codelineno-16-205"></a>    <span class="p">})</span>
+<a id="__codelineno-16-206" name="__codelineno-16-206" href="#__codelineno-16-206"></a>
+<a id="__codelineno-16-207" name="__codelineno-16-207" href="#__codelineno-16-207"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-208" name="__codelineno-16-208" href="#__codelineno-16-208"></a>    <span class="c1">// Elastic Load Balancing</span>
+<a id="__codelineno-16-209" name="__codelineno-16-209" href="#__codelineno-16-209"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-210" name="__codelineno-16-210" href="#__codelineno-16-210"></a>
+<a id="__codelineno-16-211" name="__codelineno-16-211" href="#__codelineno-16-211"></a>    <span class="kd">const</span> <span class="nx">elb_sg</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">SecurityGroup</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;elb-sg&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-212" name="__codelineno-16-212" href="#__codelineno-16-212"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-213" name="__codelineno-16-213" href="#__codelineno-16-213"></a>    <span class="p">})</span>
+<a id="__codelineno-16-214" name="__codelineno-16-214" href="#__codelineno-16-214"></a>
+<a id="__codelineno-16-215" name="__codelineno-16-215" href="#__codelineno-16-215"></a>    <span class="kd">const</span> <span class="nx">elb</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationLoadBalancer</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;elb&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-216" name="__codelineno-16-216" href="#__codelineno-16-216"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-217" name="__codelineno-16-217" href="#__codelineno-16-217"></a>      <span class="nx">securityGroup</span>: <span class="kt">elb_sg</span><span class="p">,</span>
+<a id="__codelineno-16-218" name="__codelineno-16-218" href="#__codelineno-16-218"></a>      <span class="nx">internetFacing</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-16-219" name="__codelineno-16-219" href="#__codelineno-16-219"></a>    <span class="p">})</span>
+<a id="__codelineno-16-220" name="__codelineno-16-220" href="#__codelineno-16-220"></a>
+<a id="__codelineno-16-221" name="__codelineno-16-221" href="#__codelineno-16-221"></a>    <span class="kd">const</span> <span class="nx">elb_targetgroup</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationTargetGroup</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;targetgroup&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-222" name="__codelineno-16-222" href="#__codelineno-16-222"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-16-223" name="__codelineno-16-223" href="#__codelineno-16-223"></a>      <span class="nx">targets</span><span class="o">:</span> <span class="p">[</span><span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2_targets</span><span class="p">.</span><span class="nx">InstanceTarget</span><span class="p">(</span><span class="nx">ec2</span><span class="p">)],</span>
+<a id="__codelineno-16-224" name="__codelineno-16-224" href="#__codelineno-16-224"></a>      <span class="nx">port</span>: <span class="kt">80</span><span class="p">,</span>
+<a id="__codelineno-16-225" name="__codelineno-16-225" href="#__codelineno-16-225"></a>      <span class="nx">healthCheck</span><span class="o">:</span> <span class="p">{</span> <span class="nx">enabled</span>: <span class="kt">true</span><span class="p">,</span> <span class="nx">healthyHttpCodes</span><span class="o">:</span> <span class="s2">&quot;200-399&quot;</span> <span class="p">},</span>
+<a id="__codelineno-16-226" name="__codelineno-16-226" href="#__codelineno-16-226"></a>    <span class="p">})</span>
+<a id="__codelineno-16-227" name="__codelineno-16-227" href="#__codelineno-16-227"></a>
+<a id="__codelineno-16-228" name="__codelineno-16-228" href="#__codelineno-16-228"></a>    <span class="nx">asg</span><span class="p">.</span><span class="nx">attachToApplicationTargetGroup</span><span class="p">(</span><span class="nx">elb_targetgroup</span><span class="p">)</span>
+<a id="__codelineno-16-229" name="__codelineno-16-229" href="#__codelineno-16-229"></a>
+<a id="__codelineno-16-230" name="__codelineno-16-230" href="#__codelineno-16-230"></a>    <span class="nx">ec2_sg</span><span class="p">.</span><span class="nx">addIngressRule</span><span class="p">(</span><span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Peer</span><span class="p">.</span><span class="nx">securityGroupId</span><span class="p">(</span><span class="nx">elb_sg</span><span class="p">.</span><span class="nx">securityGroupId</span><span class="p">),</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Port</span><span class="p">.</span><span class="nx">tcp</span><span class="p">(</span><span class="mf">80</span><span class="p">))</span>
+<a id="__codelineno-16-231" name="__codelineno-16-231" href="#__codelineno-16-231"></a>
+<a id="__codelineno-16-232" name="__codelineno-16-232" href="#__codelineno-16-232"></a>    <span class="kd">const</span> <span class="nx">listener_http</span> <span class="o">=</span> <span class="nx">elb</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;Listener_http&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-233" name="__codelineno-16-233" href="#__codelineno-16-233"></a>      <span class="nx">port</span>: <span class="kt">80</span><span class="p">,</span>
+<a id="__codelineno-16-234" name="__codelineno-16-234" href="#__codelineno-16-234"></a>      <span class="nx">open</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-16-235" name="__codelineno-16-235" href="#__codelineno-16-235"></a>      <span class="nx">defaultTargetGroups</span><span class="o">:</span> <span class="p">[</span><span class="nx">elb_targetgroup</span><span class="p">],</span>
+<a id="__codelineno-16-236" name="__codelineno-16-236" href="#__codelineno-16-236"></a>    <span class="p">})</span>
+<a id="__codelineno-16-237" name="__codelineno-16-237" href="#__codelineno-16-237"></a>
+<a id="__codelineno-16-238" name="__codelineno-16-238" href="#__codelineno-16-238"></a>    <span class="kd">const</span> <span class="nx">listener_https</span> <span class="o">=</span> <span class="nx">elb</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s1">&#39;Listener_https&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-239" name="__codelineno-16-239" href="#__codelineno-16-239"></a>      <span class="nx">port</span>: <span class="kt">443</span><span class="p">,</span>
+<a id="__codelineno-16-240" name="__codelineno-16-240" href="#__codelineno-16-240"></a>      <span class="nx">open</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-16-241" name="__codelineno-16-241" href="#__codelineno-16-241"></a>      <span class="nx">certificates</span><span class="o">:</span> <span class="p">[</span><span class="nx">elb_cert</span><span class="p">],</span>
+<a id="__codelineno-16-242" name="__codelineno-16-242" href="#__codelineno-16-242"></a>      <span class="nx">defaultTargetGroups</span><span class="o">:</span> <span class="p">[</span><span class="nx">elb_targetgroup</span><span class="p">],</span>
+<a id="__codelineno-16-243" name="__codelineno-16-243" href="#__codelineno-16-243"></a>    <span class="p">})</span>
+<a id="__codelineno-16-244" name="__codelineno-16-244" href="#__codelineno-16-244"></a>
+<a id="__codelineno-16-245" name="__codelineno-16-245" href="#__codelineno-16-245"></a>    <span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationListenerRule</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;listener_http_rule&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-246" name="__codelineno-16-246" href="#__codelineno-16-246"></a>      <span class="nx">listener</span>: <span class="kt">listener_http</span><span class="p">,</span>
+<a id="__codelineno-16-247" name="__codelineno-16-247" href="#__codelineno-16-247"></a>      <span class="nx">priority</span>: <span class="kt">10</span><span class="p">,</span>
+<a id="__codelineno-16-248" name="__codelineno-16-248" href="#__codelineno-16-248"></a>      <span class="nx">conditions</span><span class="o">:</span> <span class="p">[</span>
+<a id="__codelineno-16-249" name="__codelineno-16-249" href="#__codelineno-16-249"></a>        <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ListenerCondition</span><span class="p">.</span><span class="nx">hostHeaders</span><span class="p">(</span>
+<a id="__codelineno-16-250" name="__codelineno-16-250" href="#__codelineno-16-250"></a>          <span class="p">[</span><span class="nx">elb</span><span class="p">.</span><span class="nx">loadBalancerDnsName</span><span class="p">,</span> <span class="s1">&#39;elb.wordpress-cdk.tk&#39;</span><span class="p">,</span> <span class="nx">cloudfront</span><span class="p">.</span><span class="nx">domainName</span><span class="p">])</span>
+<a id="__codelineno-16-251" name="__codelineno-16-251" href="#__codelineno-16-251"></a>      <span class="p">],</span>
+<a id="__codelineno-16-252" name="__codelineno-16-252" href="#__codelineno-16-252"></a>      <span class="nx">action</span>: <span class="kt">aws_elasticloadbalancingv2.ListenerAction.redirect</span><span class="p">({</span>
+<a id="__codelineno-16-253" name="__codelineno-16-253" href="#__codelineno-16-253"></a>        <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-16-254" name="__codelineno-16-254" href="#__codelineno-16-254"></a>        <span class="nx">permanent</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-16-255" name="__codelineno-16-255" href="#__codelineno-16-255"></a>      <span class="p">})</span>
+<a id="__codelineno-16-256" name="__codelineno-16-256" href="#__codelineno-16-256"></a>    <span class="p">})</span>
+<a id="__codelineno-16-257" name="__codelineno-16-257" href="#__codelineno-16-257"></a>
+<a id="__codelineno-16-258" name="__codelineno-16-258" href="#__codelineno-16-258"></a>    <span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationListenerRule</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;listener_https_rule&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-259" name="__codelineno-16-259" href="#__codelineno-16-259"></a>      <span class="nx">listener</span>: <span class="kt">listener_https</span><span class="p">,</span>
+<a id="__codelineno-16-260" name="__codelineno-16-260" href="#__codelineno-16-260"></a>      <span class="nx">priority</span>: <span class="kt">10</span><span class="p">,</span>
+<a id="__codelineno-16-261" name="__codelineno-16-261" href="#__codelineno-16-261"></a>      <span class="nx">conditions</span><span class="o">:</span> <span class="p">[</span>
+<a id="__codelineno-16-262" name="__codelineno-16-262" href="#__codelineno-16-262"></a>        <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ListenerCondition</span><span class="p">.</span><span class="nx">hostHeaders</span><span class="p">(</span>
+<a id="__codelineno-16-263" name="__codelineno-16-263" href="#__codelineno-16-263"></a>          <span class="p">[</span><span class="nx">elb</span><span class="p">.</span><span class="nx">loadBalancerDnsName</span><span class="p">,</span> <span class="s1">&#39;elb.wordpress-cdk.tk&#39;</span><span class="p">,</span> <span class="nx">cloudfront</span><span class="p">.</span><span class="nx">domainName</span><span class="p">])</span>
+<a id="__codelineno-16-264" name="__codelineno-16-264" href="#__codelineno-16-264"></a>      <span class="p">],</span>
+<a id="__codelineno-16-265" name="__codelineno-16-265" href="#__codelineno-16-265"></a>      <span class="nx">action</span>: <span class="kt">aws_elasticloadbalancingv2.ListenerAction.redirect</span><span class="p">({</span>
+<a id="__codelineno-16-266" name="__codelineno-16-266" href="#__codelineno-16-266"></a>        <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-16-267" name="__codelineno-16-267" href="#__codelineno-16-267"></a>        <span class="nx">permanent</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-16-268" name="__codelineno-16-268" href="#__codelineno-16-268"></a>      <span class="p">})</span>
+<a id="__codelineno-16-269" name="__codelineno-16-269" href="#__codelineno-16-269"></a>    <span class="p">})</span>
+<a id="__codelineno-16-270" name="__codelineno-16-270" href="#__codelineno-16-270"></a>
+<a id="__codelineno-16-271" name="__codelineno-16-271" href="#__codelineno-16-271"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-272" name="__codelineno-16-272" href="#__codelineno-16-272"></a>    <span class="c1">// Route 53</span>
+<a id="__codelineno-16-273" name="__codelineno-16-273" href="#__codelineno-16-273"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-274" name="__codelineno-16-274" href="#__codelineno-16-274"></a>
+<a id="__codelineno-16-275" name="__codelineno-16-275" href="#__codelineno-16-275"></a>    <span class="ow">new</span> <span class="nx">aws_route53</span><span class="p">.</span><span class="nx">ARecord</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;elb-domain&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-276" name="__codelineno-16-276" href="#__codelineno-16-276"></a>      <span class="nx">zone</span>: <span class="kt">hostedzone</span><span class="p">,</span>
+<a id="__codelineno-16-277" name="__codelineno-16-277" href="#__codelineno-16-277"></a>      <span class="nx">recordName</span><span class="o">:</span> <span class="s1">&#39;elb&#39;</span><span class="p">,</span>
+<a id="__codelineno-16-278" name="__codelineno-16-278" href="#__codelineno-16-278"></a>      <span class="nx">target</span>: <span class="kt">aws_route53.RecordTarget.fromAlias</span><span class="p">(</span><span class="ow">new</span> <span class="nx">aws_route53_targets</span><span class="p">.</span><span class="nx">LoadBalancerTarget</span><span class="p">(</span><span class="nx">elb</span><span class="p">)),</span>
+<a id="__codelineno-16-279" name="__codelineno-16-279" href="#__codelineno-16-279"></a>    <span class="p">});</span>
+<a id="__codelineno-16-280" name="__codelineno-16-280" href="#__codelineno-16-280"></a>
+<a id="__codelineno-16-281" name="__codelineno-16-281" href="#__codelineno-16-281"></a>    <span class="ow">new</span> <span class="nx">aws_route53</span><span class="p">.</span><span class="nx">ARecord</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cloudfront-domain&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-282" name="__codelineno-16-282" href="#__codelineno-16-282"></a>      <span class="nx">zone</span>: <span class="kt">hostedzone</span><span class="p">,</span>
+<a id="__codelineno-16-283" name="__codelineno-16-283" href="#__codelineno-16-283"></a>      <span class="nx">recordName</span><span class="o">:</span> <span class="s1">&#39;www&#39;</span><span class="p">,</span>
+<a id="__codelineno-16-284" name="__codelineno-16-284" href="#__codelineno-16-284"></a>      <span class="nx">target</span>: <span class="kt">aws_route53.RecordTarget.fromAlias</span><span class="p">(</span><span class="ow">new</span> <span class="nx">aws_route53_targets</span><span class="p">.</span><span class="nx">CloudFrontTarget</span><span class="p">(</span><span class="nx">cloudfront</span><span class="p">)),</span>
+<a id="__codelineno-16-285" name="__codelineno-16-285" href="#__codelineno-16-285"></a>    <span class="p">});</span>
+<a id="__codelineno-16-286" name="__codelineno-16-286" href="#__codelineno-16-286"></a>
+<a id="__codelineno-16-287" name="__codelineno-16-287" href="#__codelineno-16-287"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-288" name="__codelineno-16-288" href="#__codelineno-16-288"></a>    <span class="c1">// CloudFormation Output</span>
+<a id="__codelineno-16-289" name="__codelineno-16-289" href="#__codelineno-16-289"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-16-290" name="__codelineno-16-290" href="#__codelineno-16-290"></a>
+<a id="__codelineno-16-291" name="__codelineno-16-291" href="#__codelineno-16-291"></a>    <span class="ow">new</span> <span class="nx">CfnOutput</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;ec2-output&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-292" name="__codelineno-16-292" href="#__codelineno-16-292"></a>      <span class="nx">value</span>: <span class="kt">ec2.instancePublicIp</span>
+<a id="__codelineno-16-293" name="__codelineno-16-293" href="#__codelineno-16-293"></a>    <span class="p">})</span>
+<a id="__codelineno-16-294" name="__codelineno-16-294" href="#__codelineno-16-294"></a>    <span class="ow">new</span> <span class="nx">CfnOutput</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;rds-output&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-295" name="__codelineno-16-295" href="#__codelineno-16-295"></a>      <span class="nx">value</span>: <span class="kt">rds.dbInstanceEndpointAddress</span><span class="p">,</span>
+<a id="__codelineno-16-296" name="__codelineno-16-296" href="#__codelineno-16-296"></a>    <span class="p">})</span>
+<a id="__codelineno-16-297" name="__codelineno-16-297" href="#__codelineno-16-297"></a>    <span class="ow">new</span> <span class="nx">CfnOutput</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;secretsmanager-output&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-298" name="__codelineno-16-298" href="#__codelineno-16-298"></a>      <span class="nx">value</span>: <span class="kt">rds.secret</span><span class="o">!</span><span class="p">.</span><span class="nx">secretName</span>
+<a id="__codelineno-16-299" name="__codelineno-16-299" href="#__codelineno-16-299"></a>    <span class="p">})</span>
+<a id="__codelineno-16-300" name="__codelineno-16-300" href="#__codelineno-16-300"></a>    <span class="ow">new</span> <span class="nx">CfnOutput</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;elb-output&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-301" name="__codelineno-16-301" href="#__codelineno-16-301"></a>      <span class="nx">value</span>: <span class="kt">elb.loadBalancerDnsName</span>
+<a id="__codelineno-16-302" name="__codelineno-16-302" href="#__codelineno-16-302"></a>    <span class="p">})</span>
+<a id="__codelineno-16-303" name="__codelineno-16-303" href="#__codelineno-16-303"></a>    <span class="ow">new</span> <span class="nx">CfnOutput</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cloudfront-output&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-16-304" name="__codelineno-16-304" href="#__codelineno-16-304"></a>      <span class="nx">value</span>: <span class="kt">cloudfront.distributionDomainName</span>
+<a id="__codelineno-16-305" name="__codelineno-16-305" href="#__codelineno-16-305"></a>    <span class="p">})</span>
+<a id="__codelineno-16-306" name="__codelineno-16-306" href="#__codelineno-16-306"></a>
+<a id="__codelineno-16-307" name="__codelineno-16-307" href="#__codelineno-16-307"></a>  <span class="p">}</span>
+<a id="__codelineno-16-308" name="__codelineno-16-308" href="#__codelineno-16-308"></a><span class="p">}</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">aws_certificatemanager</span><span class="p">,</span> <span class="nx">aws_route53</span><span class="p">,</span> <span class="nx">Stack</span><span class="p">,</span> <span class="nx">StackProps</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&quot;aws-cdk-lib&quot;</span><span class="p">;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">Construct</span> <span class="p">}</span> <span class="kr">from</span> <span class="s2">&quot;constructs&quot;</span><span class="p">;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">export</span> <span class="kd">class</span> <span class="nx">WordpressCdkUsEast1Stack</span> <span class="k">extends</span> <span class="nx">Stack</span> <span class="p">{</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="kr">constructor</span><span class="p">(</span><span class="nx">scope</span>: <span class="kt">Construct</span><span class="p">,</span> <span class="nx">id</span>: <span class="kt">string</span><span class="p">,</span> <span class="nx">props?</span>: <span class="kt">StackProps</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>        <span class="k">super</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>        <span class="c1">// *****</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>        <span class="c1">// Route 53</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>        <span class="c1">// *****</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>        <span class="kd">const</span> <span class="nx">hostedzone</span> <span class="o">=</span> <span class="nx">aws_route53</span><span class="p">.</span><span class="nx">HostedZone</span><span class="p">.</span><span class="nx">fromHostedZoneAttributes</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;hostedzone&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>            <span class="nx">hostedZoneId</span><span class="o">:</span> <span class="s1">&#39;Z0364500207RRL1KGDBUZ&#39;</span><span class="p">,</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>            <span class="nx">zoneName</span><span class="o">:</span> <span class="s1">&#39;wordpress-cdk.tk&#39;</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>        <span class="p">})</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>        <span class="c1">// *****</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>        <span class="c1">// Certificate Manager</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>        <span class="c1">// *****</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>        <span class="kd">const</span> <span class="nx">cloudfront_cert</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_certificatemanager</span><span class="p">.</span><span class="nx">Certificate</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cloudfront_cert&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>            <span class="nx">domainName</span><span class="o">:</span> <span class="s1">&#39;www.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>            <span class="nx">validation</span>: <span class="kt">aws_certificatemanager.CertificateValidation.fromDns</span><span class="p">(</span><span class="nx">hostedzone</span><span class="p">),</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>        <span class="p">})</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>    <span class="p">}</span>
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="p">}</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+</details>
 
               
             </article>
