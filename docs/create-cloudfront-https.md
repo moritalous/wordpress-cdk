@@ -158,3 +158,23 @@ cdk deploy WordpressCdkStack
 !!! note
 
     すべてのスタックをまとめてデプロイする場合は`cdk deploy --all`でも可能です
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    === "bin/wordpress-cdk.ts"
+        ```typescript
+        --8<-- "step/10_cloudfront-2/bin/wordpress-cdk.ts"
+        ```
+
+    === "lib/wordpress-cdk-stack.ts"
+        ```typescript
+        --8<-- "step/10_cloudfront-2/lib/wordpress-cdk-stack.ts"
+        ```
+
+    === "lib/wordpress-cdk-stack-us-east-1.ts"
+        ```typescript
+        --8<-- "step/10_cloudfront-2/lib/wordpress-cdk-stack-us-east-1.ts"
+        ```

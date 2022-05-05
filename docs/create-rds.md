@@ -199,3 +199,12 @@ cdk deploy
 ```
 
 マルチAZ化が完了です。
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/3_rds/lib/wordpress-cdk-stack.ts"
+    ```

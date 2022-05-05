@@ -321,4 +321,23 @@ ViewerProtocolPolicyを`ALLOW_ALL`から`REDIRECT_TO_HTTPS`に変更するだけ
     < 
     * Connection #0 to host www.wordpress-cdk.tk left intact
     ```
-    
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    === "bin/wordpress-cdk.ts"
+        ```typescript
+        --8<-- "step/11_finish/bin/wordpress-cdk.ts"
+        ```
+
+    === "lib/wordpress-cdk-stack.ts"
+        ```typescript
+        --8<-- "step/11_finish/lib/wordpress-cdk-stack.ts"
+        ```
+
+    === "lib/wordpress-cdk-stack-us-east-1.ts"
+        ```typescript
+        --8<-- "step/11_finish/lib/wordpress-cdk-stack-us-east-1.ts"
+        ```

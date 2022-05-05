@@ -76,3 +76,12 @@ cdk deploy
 !!! note
 
     WordPressの再インストールになるので、`cdk destroy`した後でdeployします。
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/5_efs/lib/wordpress-cdk-stack.ts"
+    ```

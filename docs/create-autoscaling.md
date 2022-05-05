@@ -97,3 +97,12 @@ cdk deploy
 ```
 
 ここまでできると、マルチAZ構成のWordPressの構築が最低限完了です。:laughing: :laughing: :laughing:
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/6_asg/lib/wordpress-cdk-stack.ts"
+    ```

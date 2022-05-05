@@ -58,3 +58,12 @@ cdk deploy
 
 AWSがSSL証明書を無料で発行してくれるので簡単にHTTPS化ができました。
 HTTPS化した場合、WordPressに設定が必要ですので、次の手順を行ってください。
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/8_acm/lib/wordpress-cdk-stack.ts"
+    ```

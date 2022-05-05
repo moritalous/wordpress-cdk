@@ -123,3 +123,12 @@ cdk deploy
 !!! Warning
 
     NATゲートウェイあり状態でdeployしたのち、NATゲートウェイなしに変更するとサブネットの重複が発生し、デプロイに失敗します。こういった場合は一度`cdk destroy`でリソースをすべて削除した後、再度`cdk deploy`を実行します。
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/1_vpc/lib/wordpress-cdk-stack.ts"
+    ```

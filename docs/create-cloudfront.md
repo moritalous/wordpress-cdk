@@ -49,3 +49,11 @@ cdk deploy
 
 CloudFront発行のドメインでアクセスできることを確認してください。
 
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/9_cloudfront/lib/wordpress-cdk-stack.ts"
+    ```

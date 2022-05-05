@@ -127,3 +127,12 @@ HTTPヘッダーの`host`がELB発行のドメインの場合に`elb.wordpress-c
 ```terminal title="ターミナル"
 cdk deploy
 ```
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/7_route53/lib/wordpress-cdk-stack.ts"
+    ```

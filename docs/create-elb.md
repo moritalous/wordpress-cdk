@@ -68,3 +68,12 @@ ELBのドメイン名でアクセスでき、EC2のパブリックIPアドレス
 !!! info
 
     WordPressは初期設定時のドメイン名を記憶するようなので、IPアドレスやドメインが変わると再度セットアップが必要になります。`cdk destroy`で削除の後、再度`cdk deploy`するのが確実です。（データベースのデータが消えるので、WordPressの初期設定が必要です）
+
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/4_elb/lib/wordpress-cdk-stack.ts"
+    ```

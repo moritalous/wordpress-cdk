@@ -219,3 +219,11 @@ find /var/www -type f -exec sudo chmod 0644 {} \;
 ここから先は本題ではないので省略します。
 
 これで、1台のEC2でのWordpress環境の構築ができました。
+
+## ソースコード
+
+??? abstract "ソースコード"
+
+    ```typescript title="wordpress-cdk/lib/wordpress-cdk-stack.ts"
+    --8<-- "step/2_ec2/lib/wordpress-cdk-stack.ts"
+    ```
