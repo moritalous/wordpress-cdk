@@ -20,6 +20,8 @@ nav:
     - "CDN追加": create-cloudfront.md
     - "CDNの独自ドメイン追加とHTTPS化": create-cloudfront-https.md
     - "最後の仕上げ": finishing.md
+  - "[おまけ]コンテナ編":
+    - "Fargate": create-fargate.md
 
 repo_url: https://github.com/moritalous/wordpress-cdk
 
