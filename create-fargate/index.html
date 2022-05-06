@@ -1,0 +1,1482 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="moritalous">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+    
+    
+      
+        <title>Fargate - WordPressをCDKで構築する</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-orange">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href=".." title="WordPressをCDKで構築する" class="md-header__button md-logo" aria-label="WordPressをCDKで構築する" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WordPressをCDKで構築する
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fargate
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="クリア" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/moritalous/wordpress-cdk" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="WordPressをCDKで構築する" class="md-nav__button md-logo" aria-label="WordPressをCDKで構築する" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    WordPressをCDKで構築する
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/moritalous/wordpress-cdk" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        TOP
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          事前準備
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="事前準備" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          事前準備
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setting/" class="md-nav__link">
+        インストール
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-project/" class="md-nav__link">
+        CDKプロジェクトの作成
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          手順
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="手順" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          手順
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-vpc/" class="md-nav__link">
+        VPCを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-ec2/" class="md-nav__link">
+        EC2を作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-rds/" class="md-nav__link">
+        RDSを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-elb/" class="md-nav__link">
+        ELBを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-efs/" class="md-nav__link">
+        EFSを作成
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-autoscaling/" class="md-nav__link">
+        EC2 Auto Scalingを作成
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          追加手順
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="追加手順" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          追加手順
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-route53/" class="md-nav__link">
+        独自ドメインの追加
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-acm/" class="md-nav__link">
+        HTTPS化(AWSの設定)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setting-wordpress-https/" class="md-nav__link">
+        HTTPS化(WordPressの設定)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-cloudfront/" class="md-nav__link">
+        CDN追加
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../create-cloudfront-https/" class="md-nav__link">
+        CDNの独自ドメイン追加とHTTPS化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../finishing/" class="md-nav__link">
+        最後の仕上げ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          [おまけ]コンテナ編
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="[おまけ]コンテナ編" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          [おまけ]コンテナ編
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Fargate
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Fargate
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    構成図
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ecs" class="md-nav__link">
+    ECSクラスターの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    MySQLサービスの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordpress" class="md-nav__link">
+    WordPressサービスの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ソースコード
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    構成図
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ecs" class="md-nav__link">
+    ECSクラスターの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mysql" class="md-nav__link">
+    MySQLサービスの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordpress" class="md-nav__link">
+    WordPressサービスの作成
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    ソースコード
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/moritalous/wordpress-cdk/edit/master/docs/create-fargate.md" title="編集" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+  <h1>Fargate</h1>
+
+<p>EC2とRDSを使わず、Fargateで構成してみます。</p>
+<h2 id="_1">構成図</h2>
+<p><img alt="" src="../images/architectuture-fargate.drawio.svg" /></p>
+<h2 id="ecs">ECSクラスターの作成</h2>
+<p>まずはECSのクラスターを作成します。  </p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>    <span class="kd">const</span> <span class="nx">vpc</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Vpc</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;vpc&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">natGateways</span>: <span class="kt">0</span> <span class="p">})</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="kd">const</span> <span class="nx">cluster</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Cluster</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>      <span class="nx">enableFargateCapacityProviders</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>      <span class="nx">defaultCloudMapNamespace</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;my-wordpress&#39;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>      <span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>defaultCloudMapNamespace</code>は、Cloud Mapで使用するネームスペースの指定です。<br />
+MySQL用とWordPress用に２つのFargateサービスを作成するのですが、サービス間の名前解決はCloud Mapで行います。サービス検出の詳細は<a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/bestpracticesguide/networking-connecting-services.html">こちら</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>enableFargateCapacityProviders</code>は、Fargateのキャパシティプロバイダーを有効にしています。キャパシティプロバイダーの詳細は<a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/fargate-capacity-providers.html">こちら</a></p>
+</div>
+<h2 id="mysql">MySQLサービスの作成</h2>
+<p>まずはMySQLの認証情報を作成し、Secrets Managerに登録します。</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-1-22" name="__codelineno-1-22"></a>    <span class="kd">const</span> <span class="nx">mysql_secret</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_secretsmanager</span><span class="p">.</span><span class="nx">Secret</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>      <span class="nx">generateSecretString</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>        <span class="nx">secretStringTemplate</span>: <span class="kt">JSON.stringify</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="nx">dbname</span><span class="o">:</span> <span class="s1">&#39;wordpress&#39;</span> <span class="p">}),</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>        <span class="nx">generateStringKey</span><span class="o">:</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>        <span class="nx">excludePunctuation</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>      <span class="p">}</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<p>MySQLサービスを作成します。</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span>
+<span class="normal"><a href="#__codelineno-2-41">41</a></span>
+<span class="normal"><a href="#__codelineno-2-42">42</a></span>
+<span class="normal"><a href="#__codelineno-2-43">43</a></span>
+<span class="normal"><a href="#__codelineno-2-44">44</a></span>
+<span class="normal"><a href="#__codelineno-2-45">45</a></span>
+<span class="normal"><a href="#__codelineno-2-46">46</a></span>
+<span class="normal"><a href="#__codelineno-2-47">47</a></span>
+<span class="normal"><a href="#__codelineno-2-48">48</a></span>
+<span class="normal"><a href="#__codelineno-2-49">49</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-2-30" name="__codelineno-2-30"></a>    <span class="kd">const</span> <span class="nx">mysql_service</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">FargateService</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;mysql-service&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>      <span class="nx">cluster</span>: <span class="kt">cluster</span><span class="p">,</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>      <span class="nx">serviceName</span><span class="o">:</span> <span class="s1">&#39;mysql_service&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a>      <span class="nx">taskDefinition</span>: <span class="kt">new</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">FargateTaskDefinition</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;mysql-task&#39;</span><span class="p">),</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>      <span class="nx">assignPublicIp</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>      <span class="nx">cloudMapOptions</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a>        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;mysql&#39;</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a>      <span class="p">},</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a>      <span class="nx">capacityProviderStrategies</span><span class="o">:</span> <span class="p">[</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a>        <span class="p">{</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a>          <span class="nx">capacityProvider</span><span class="o">:</span> <span class="s2">&quot;FARGATE_SPOT&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a>          <span class="nx">base</span>: <span class="kt">1</span><span class="p">,</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a>          <span class="nx">weight</span>: <span class="kt">1</span><span class="p">,</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a>        <span class="p">}</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a>      <span class="p">]</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>34行目<ul>
+<li>空のタスク定義を作成</li>
+</ul>
+</li>
+<li>
+<p>36行目</p>
+<ul>
+<li>パブリックIPを付与</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>コンテナイメージををDocker HubからPullするためにパブリックIPが必要です</p>
+</div>
+</li>
+<li>
+<p>38-40行目</p>
+<ul>
+<li>Cloud Mapに登録する名前</li>
+</ul>
+</li>
+<li>42-48行目<ul>
+<li>Fargate Spotを使用するように指定</li>
+</ul>
+</li>
+</ul>
+<p>タスク定義にコンテナを追加</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span>
+<span class="normal"><a href="#__codelineno-3-53">53</a></span>
+<span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span>
+<span class="normal"><a href="#__codelineno-3-62">62</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-3-51" name="__codelineno-3-51"></a>    <span class="kd">const</span> <span class="nx">mysql_container</span> <span class="o">=</span> <span class="nx">mysql_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">addContainer</span><span class="p">(</span><span class="s1">&#39;mysql-container&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>      <span class="nx">image</span>: <span class="kt">aws_ecs.ContainerImage.fromRegistry</span><span class="p">(</span><span class="s1">&#39;mysql&#39;</span><span class="p">),</span>
+<a id="__codelineno-3-53" name="__codelineno-3-53"></a>      <span class="nx">environment</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-3-54" name="__codelineno-3-54"></a>        <span class="s2">&quot;MYSQL_RANDOM_ROOT_PASSWORD&quot;</span><span class="o">:</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a>      <span class="p">},</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>      <span class="nx">secrets</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>        <span class="s2">&quot;MYSQL_USER&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">),</span>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a>        <span class="s2">&quot;MYSQL_PASSWORD&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">),</span>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a>        <span class="s2">&quot;MYSQL_DATABASE&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;dbname&#39;</span><span class="p">),</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>      <span class="p">},</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>      <span class="nx">logging</span>: <span class="kt">aws_ecs.LogDriver.awsLogs</span><span class="p">({</span> <span class="nx">streamPrefix</span><span class="o">:</span> <span class="s1">&#39;mysql-service&#39;</span> <span class="p">})</span>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>52行目<ul>
+<li>コンテナイメージを指定。この指定の仕方の場合はDocker Hubから取得。</li>
+</ul>
+</li>
+<li>53-60行目<ul>
+<li>環境変数を指定。シークレットマネージャーから取得する値は<code>secrets</code>に指定。</li>
+</ul>
+</li>
+<li>61行目<ul>
+<li>ログドライバーを指定。<code>awsLogs</code>を指定するとCloudWatch Logsに出力。</li>
+</ul>
+</li>
+</ul>
+<p>MySQLデータ永続化のためEFSを追加</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-64">64</a></span>
+<span class="normal"><a href="#__codelineno-4-65">65</a></span>
+<span class="normal"><a href="#__codelineno-4-66">66</a></span>
+<span class="normal"><a href="#__codelineno-4-67">67</a></span>
+<span class="normal"><a href="#__codelineno-4-68">68</a></span>
+<span class="normal"><a href="#__codelineno-4-69">69</a></span>
+<span class="normal"><a href="#__codelineno-4-70">70</a></span>
+<span class="normal"><a href="#__codelineno-4-71">71</a></span>
+<span class="normal"><a href="#__codelineno-4-72">72</a></span>
+<span class="normal"><a href="#__codelineno-4-73">73</a></span>
+<span class="normal"><a href="#__codelineno-4-74">74</a></span>
+<span class="normal"><a href="#__codelineno-4-75">75</a></span>
+<span class="normal"><a href="#__codelineno-4-76">76</a></span>
+<span class="normal"><a href="#__codelineno-4-77">77</a></span>
+<span class="normal"><a href="#__codelineno-4-78">78</a></span>
+<span class="normal"><a href="#__codelineno-4-79">79</a></span>
+<span class="normal"><a href="#__codelineno-4-80">80</a></span>
+<span class="normal"><a href="#__codelineno-4-81">81</a></span>
+<span class="normal"><a href="#__codelineno-4-82">82</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-4-64" name="__codelineno-4-64"></a>    <span class="kd">const</span> <span class="nx">mysql_efs</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_efs</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;mysql-efs&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-4-65" name="__codelineno-4-65"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-4-66" name="__codelineno-4-66"></a>      <span class="nx">removalPolicy</span>: <span class="kt">RemovalPolicy.DESTROY</span>
+<a id="__codelineno-4-67" name="__codelineno-4-67"></a>    <span class="p">})</span>
+<a id="__codelineno-4-68" name="__codelineno-4-68"></a>
+<a id="__codelineno-4-69" name="__codelineno-4-69"></a>    <span class="nx">mysql_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">addVolume</span><span class="p">({</span>
+<a id="__codelineno-4-70" name="__codelineno-4-70"></a>      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;mysql-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-71" name="__codelineno-4-71"></a>      <span class="nx">efsVolumeConfiguration</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-4-72" name="__codelineno-4-72"></a>        <span class="nx">fileSystemId</span>: <span class="kt">mysql_efs.fileSystemId</span>
+<a id="__codelineno-4-73" name="__codelineno-4-73"></a>      <span class="p">}</span>
+<a id="__codelineno-4-74" name="__codelineno-4-74"></a>    <span class="p">})</span>
+<a id="__codelineno-4-75" name="__codelineno-4-75"></a>
+<a id="__codelineno-4-76" name="__codelineno-4-76"></a>    <span class="nx">mysql_container</span><span class="p">.</span><span class="nx">addMountPoints</span><span class="p">({</span>
+<a id="__codelineno-4-77" name="__codelineno-4-77"></a>      <span class="nx">containerPath</span><span class="o">:</span> <span class="s1">&#39;/var/lib/mysql&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-78" name="__codelineno-4-78"></a>      <span class="nx">sourceVolume</span><span class="o">:</span> <span class="s1">&#39;mysql-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-4-79" name="__codelineno-4-79"></a>      <span class="nx">readOnly</span>: <span class="kt">false</span>
+<a id="__codelineno-4-80" name="__codelineno-4-80"></a>    <span class="p">})</span>
+<a id="__codelineno-4-81" name="__codelineno-4-81"></a>
+<a id="__codelineno-4-82" name="__codelineno-4-82"></a>    <span class="nx">mysql_efs</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowDefaultPortFrom</span><span class="p">(</span><span class="nx">mysql_service</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>64-67行目<ul>
+<li>EFSを作成</li>
+</ul>
+</li>
+<li>69-74行目<ul>
+<li>EFSをタスク定義のボリュームとして指定</li>
+</ul>
+</li>
+<li>76-80行目<ul>
+<li>タスク定義として指定したボリュームをコンテナにマウント<br />
+  マウント先はコンテナイメージがVolumeで指定しているパス</li>
+</ul>
+</li>
+<li>82行目<ul>
+<li>mysqlサービスからEFSへのアクセスを許可</li>
+</ul>
+</li>
+</ul>
+<p>ここまででMySQLサービスの指定は環境です。</p>
+<h2 id="wordpress">WordPressサービスの作成</h2>
+<p>WordPressもMySQL同様に作成するのですが、WordPressはインターネットからELBを介してアクセスするように指定します。このようなよくある構成は<code>ecs_patterns</code>として提供されています。<a href="https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_ecs_patterns-readme.html">参考</a></p>
+<p>WordPressは<code>ecs_patterns</code>で提供されている<code>ApplicationLoadBalancedFargateService</code>を使用して構築します。</p>
+<p>まずは、ホストゾーンを定義します。</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-88">88</a></span>
+<span class="normal"><a href="#__codelineno-5-89">89</a></span>
+<span class="normal"><a href="#__codelineno-5-90">90</a></span>
+<span class="normal"><a href="#__codelineno-5-91">91</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-5-88" name="__codelineno-5-88"></a>    <span class="kd">const</span> <span class="nx">hostedZone</span> <span class="o">=</span> <span class="nx">aws_route53</span><span class="p">.</span><span class="nx">HostedZone</span><span class="p">.</span><span class="nx">fromHostedZoneAttributes</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;hostedzone&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-5-89" name="__codelineno-5-89"></a>      <span class="nx">hostedZoneId</span><span class="o">:</span> <span class="s1">&#39;Z0364500207RRL1KGDBUZ&#39;</span><span class="p">,</span>
+<a id="__codelineno-5-90" name="__codelineno-5-90"></a>      <span class="nx">zoneName</span><span class="o">:</span> <span class="s1">&#39;wordpress-cdk.tk&#39;</span>
+<a id="__codelineno-5-91" name="__codelineno-5-91"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<p><code>ApplicationLoadBalancedFargateService</code>を使用してWordPressサービスを作成します</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-6-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-6-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-6-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-6-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-6-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-6-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-6-100">100</a></span>
+<span class="normal"><a href="#__codelineno-6-101">101</a></span>
+<span class="normal"><a href="#__codelineno-6-102">102</a></span>
+<span class="normal"><a href="#__codelineno-6-103">103</a></span>
+<span class="normal"><a href="#__codelineno-6-104">104</a></span>
+<span class="normal"><a href="#__codelineno-6-105">105</a></span>
+<span class="normal"><a href="#__codelineno-6-106">106</a></span>
+<span class="normal"><a href="#__codelineno-6-107">107</a></span>
+<span class="normal"><a href="#__codelineno-6-108">108</a></span>
+<span class="normal"><a href="#__codelineno-6-109">109</a></span>
+<span class="normal"><a href="#__codelineno-6-110">110</a></span>
+<span class="normal"><a href="#__codelineno-6-111">111</a></span>
+<span class="normal"><a href="#__codelineno-6-112">112</a></span>
+<span class="normal"><a href="#__codelineno-6-113">113</a></span>
+<span class="normal"><a href="#__codelineno-6-114">114</a></span>
+<span class="normal"><a href="#__codelineno-6-115">115</a></span>
+<span class="normal"><a href="#__codelineno-6-116">116</a></span>
+<span class="normal"><a href="#__codelineno-6-117">117</a></span>
+<span class="normal"><a href="#__codelineno-6-118">118</a></span>
+<span class="normal"><a href="#__codelineno-6-119">119</a></span>
+<span class="normal"><a href="#__codelineno-6-120">120</a></span>
+<span class="normal"><a href="#__codelineno-6-121">121</a></span>
+<span class="normal"><a href="#__codelineno-6-122">122</a></span>
+<span class="normal"><a href="#__codelineno-6-123">123</a></span>
+<span class="normal"><a href="#__codelineno-6-124">124</a></span>
+<span class="normal"><a href="#__codelineno-6-125">125</a></span>
+<span class="normal"><a href="#__codelineno-6-126">126</a></span>
+<span class="normal"><a href="#__codelineno-6-127">127</a></span>
+<span class="normal"><a href="#__codelineno-6-128">128</a></span>
+<span class="normal"><a href="#__codelineno-6-129">129</a></span>
+<span class="normal"><a href="#__codelineno-6-130">130</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-6-93" name="__codelineno-6-93"></a>    <span class="kd">const</span> <span class="nx">wordpress_service</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ecs_patterns</span><span class="p">.</span><span class="nx">ApplicationLoadBalancedFargateService</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;wordpress-service&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-6-94" name="__codelineno-6-94"></a>      <span class="nx">cluster</span>: <span class="kt">cluster</span><span class="p">,</span>
+<a id="__codelineno-6-95" name="__codelineno-6-95"></a>      <span class="nx">serviceName</span><span class="o">:</span> <span class="s1">&#39;wordpress-service&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-96" name="__codelineno-6-96"></a>
+<a id="__codelineno-6-97" name="__codelineno-6-97"></a>      <span class="nx">taskImageOptions</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-6-98" name="__codelineno-6-98"></a>        <span class="nx">image</span>: <span class="kt">aws_ecs.ContainerImage.fromRegistry</span><span class="p">(</span><span class="s1">&#39;wordpress&#39;</span><span class="p">),</span>
+<a id="__codelineno-6-99" name="__codelineno-6-99"></a>        <span class="nx">containerName</span><span class="o">:</span> <span class="s1">&#39;wordpress&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-100" name="__codelineno-6-100"></a>        <span class="nx">containerPort</span>: <span class="kt">80</span><span class="p">,</span>
+<a id="__codelineno-6-101" name="__codelineno-6-101"></a>
+<a id="__codelineno-6-102" name="__codelineno-6-102"></a>        <span class="nx">environment</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-6-103" name="__codelineno-6-103"></a>          <span class="s2">&quot;WORDPRESS_TABLE_PREFIX&quot;</span><span class="o">:</span> <span class="s2">&quot;wp_&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-104" name="__codelineno-6-104"></a>          <span class="s2">&quot;WORDPRESS_DB_HOST&quot;</span><span class="o">:</span> <span class="s1">&#39;mysql.my-wordpress&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-105" name="__codelineno-6-105"></a>        <span class="p">},</span>
+<a id="__codelineno-6-106" name="__codelineno-6-106"></a>
+<a id="__codelineno-6-107" name="__codelineno-6-107"></a>        <span class="nx">secrets</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-6-108" name="__codelineno-6-108"></a>          <span class="s2">&quot;WORDPRESS_DB_USER&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">),</span>
+<a id="__codelineno-6-109" name="__codelineno-6-109"></a>          <span class="s2">&quot;WORDPRESS_DB_PASSWORD&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">),</span>
+<a id="__codelineno-6-110" name="__codelineno-6-110"></a>          <span class="s2">&quot;WORDPRESS_DB_NAME&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;dbname&#39;</span><span class="p">),</span>
+<a id="__codelineno-6-111" name="__codelineno-6-111"></a>        <span class="p">},</span>
+<a id="__codelineno-6-112" name="__codelineno-6-112"></a>      <span class="p">},</span>
+<a id="__codelineno-6-113" name="__codelineno-6-113"></a>
+<a id="__codelineno-6-114" name="__codelineno-6-114"></a>      <span class="nx">domainZone</span>: <span class="kt">hostedZone</span><span class="p">,</span>
+<a id="__codelineno-6-115" name="__codelineno-6-115"></a>      <span class="nx">domainName</span><span class="o">:</span> <span class="s1">&#39;fargate.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-116" name="__codelineno-6-116"></a>
+<a id="__codelineno-6-117" name="__codelineno-6-117"></a>      <span class="nx">certificate</span>: <span class="kt">new</span> <span class="nx">aws_certificatemanager</span><span class="p">.</span><span class="nx">Certificate</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cert&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-6-118" name="__codelineno-6-118"></a>        <span class="nx">domainName</span><span class="o">:</span> <span class="s1">&#39;fargate.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-119" name="__codelineno-6-119"></a>        <span class="nx">validation</span>: <span class="kt">aws_certificatemanager.CertificateValidation.fromDns</span><span class="p">(</span><span class="nx">hostedZone</span><span class="p">)</span>
+<a id="__codelineno-6-120" name="__codelineno-6-120"></a>      <span class="p">}),</span>
+<a id="__codelineno-6-121" name="__codelineno-6-121"></a>
+<a id="__codelineno-6-122" name="__codelineno-6-122"></a>      <span class="nx">protocol</span>: <span class="kt">aws_elasticloadbalancingv2.ApplicationProtocol.HTTPS</span><span class="p">,</span>
+<a id="__codelineno-6-123" name="__codelineno-6-123"></a>      <span class="nx">redirectHTTP</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-6-124" name="__codelineno-6-124"></a>
+<a id="__codelineno-6-125" name="__codelineno-6-125"></a>      <span class="nx">assignPublicIp</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-6-126" name="__codelineno-6-126"></a>
+<a id="__codelineno-6-127" name="__codelineno-6-127"></a>      <span class="nx">cloudMapOptions</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-6-128" name="__codelineno-6-128"></a>        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;wordpress&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-129" name="__codelineno-6-129"></a>      <span class="p">},</span>
+<a id="__codelineno-6-130" name="__codelineno-6-130"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<p>Fargateサービスの指定だけでなく、ドメイン名やSSL証明書、ロードバランサーの設定もここで行います。</p>
+<ul>
+<li>97-112行目<ul>
+<li>タスク定義を行います。<code>taskDefinition</code>と<code>taskImageOptions</code>のどちらか一方で指定</li>
+</ul>
+</li>
+<li>114-115行目<ul>
+<li>ドメインの設定（Route 53)</li>
+</ul>
+</li>
+<li>117-120行目<ul>
+<li>SSL証明書の設定（Certificate Manager)</li>
+</ul>
+</li>
+<li>122-123行目<ul>
+<li>ロードバランサの設定（ELB）</li>
+</ul>
+</li>
+<li>127-129行目<ul>
+<li>サービス検出の設定（Cloud Map）</li>
+</ul>
+</li>
+</ul>
+<p>次に、アクセス負荷に合わせて、コンテナの数をスケールする設定を行います。(Auto Scaling)</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-132">132</a></span>
+<span class="normal"><a href="#__codelineno-7-133">133</a></span>
+<span class="normal"><a href="#__codelineno-7-134">134</a></span>
+<span class="normal"><a href="#__codelineno-7-135">135</a></span>
+<span class="normal"><a href="#__codelineno-7-136">136</a></span>
+<span class="normal"><a href="#__codelineno-7-137">137</a></span>
+<span class="normal"><a href="#__codelineno-7-138">138</a></span>
+<span class="normal"><a href="#__codelineno-7-139">139</a></span>
+<span class="normal"><a href="#__codelineno-7-140">140</a></span>
+<span class="normal"><a href="#__codelineno-7-141">141</a></span>
+<span class="normal"><a href="#__codelineno-7-142">142</a></span>
+<span class="normal"><a href="#__codelineno-7-143">143</a></span>
+<span class="normal"><a href="#__codelineno-7-144">144</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-7-132" name="__codelineno-7-132"></a>    <span class="kd">const</span> <span class="nx">autoscale_task</span> <span class="o">=</span> <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">service</span><span class="p">.</span><span class="nx">autoScaleTaskCount</span><span class="p">({</span>
+<a id="__codelineno-7-133" name="__codelineno-7-133"></a>      <span class="nx">minCapacity</span>: <span class="kt">1</span><span class="p">,</span>
+<a id="__codelineno-7-134" name="__codelineno-7-134"></a>      <span class="nx">maxCapacity</span>: <span class="kt">10</span>
+<a id="__codelineno-7-135" name="__codelineno-7-135"></a>    <span class="p">})</span>
+<a id="__codelineno-7-136" name="__codelineno-7-136"></a>
+<a id="__codelineno-7-137" name="__codelineno-7-137"></a>    <span class="nx">autoscale_task</span><span class="p">.</span><span class="nx">scaleOnCpuUtilization</span><span class="p">(</span><span class="s1">&#39;cpu_scaling&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-7-138" name="__codelineno-7-138"></a>      <span class="nx">targetUtilizationPercent</span>: <span class="kt">50</span>
+<a id="__codelineno-7-139" name="__codelineno-7-139"></a>    <span class="p">})</span>
+<a id="__codelineno-7-140" name="__codelineno-7-140"></a>
+<a id="__codelineno-7-141" name="__codelineno-7-141"></a>    <span class="nx">autoscale_task</span><span class="p">.</span><span class="nx">scaleOnRequestCount</span><span class="p">(</span><span class="s1">&#39;request_scaling&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-7-142" name="__codelineno-7-142"></a>      <span class="nx">targetGroup</span>: <span class="kt">wordpress_service.targetGroup</span><span class="p">,</span>
+<a id="__codelineno-7-143" name="__codelineno-7-143"></a>      <span class="nx">requestsPerTarget</span>: <span class="kt">1000</span>
+<a id="__codelineno-7-144" name="__codelineno-7-144"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>132-135行目<ul>
+<li>スケールする台数の上限下限を設定</li>
+</ul>
+</li>
+<li>137-144行目<ul>
+<li>スケールする条件を設定（CPU使用率とリクエストカウント）</li>
+</ul>
+</li>
+</ul>
+<p>アップロードしたコンテンツを共有するため、EFSを追加します。</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-132">132</a></span>
+<span class="normal"><a href="#__codelineno-8-133">133</a></span>
+<span class="normal"><a href="#__codelineno-8-134">134</a></span>
+<span class="normal"><a href="#__codelineno-8-135">135</a></span>
+<span class="normal"><a href="#__codelineno-8-136">136</a></span>
+<span class="normal"><a href="#__codelineno-8-137">137</a></span>
+<span class="normal"><a href="#__codelineno-8-138">138</a></span>
+<span class="normal"><a href="#__codelineno-8-139">139</a></span>
+<span class="normal"><a href="#__codelineno-8-140">140</a></span>
+<span class="normal"><a href="#__codelineno-8-141">141</a></span>
+<span class="normal"><a href="#__codelineno-8-142">142</a></span>
+<span class="normal"><a href="#__codelineno-8-143">143</a></span>
+<span class="normal"><a href="#__codelineno-8-144">144</a></span>
+<span class="normal"><a href="#__codelineno-8-145">145</a></span>
+<span class="normal"><a href="#__codelineno-8-146">146</a></span>
+<span class="normal"><a href="#__codelineno-8-147">147</a></span>
+<span class="normal"><a href="#__codelineno-8-148">148</a></span>
+<span class="normal"><a href="#__codelineno-8-149">149</a></span>
+<span class="normal"><a href="#__codelineno-8-150">150</a></span>
+<span class="normal"><a href="#__codelineno-8-151">151</a></span>
+<span class="normal"><a href="#__codelineno-8-152">152</a></span>
+<span class="normal"><a href="#__codelineno-8-153">153</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-8-132" name="__codelineno-8-132"></a>    <span class="kd">const</span> <span class="nx">wordpress_efs</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_efs</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;efs&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-8-133" name="__codelineno-8-133"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-8-134" name="__codelineno-8-134"></a>      <span class="nx">removalPolicy</span>: <span class="kt">RemovalPolicy.DESTROY</span>
+<a id="__codelineno-8-135" name="__codelineno-8-135"></a>    <span class="p">})</span>
+<a id="__codelineno-8-136" name="__codelineno-8-136"></a>
+<a id="__codelineno-8-137" name="__codelineno-8-137"></a>    <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">addVolume</span><span class="p">({</span>
+<a id="__codelineno-8-138" name="__codelineno-8-138"></a>      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;wordpress-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-139" name="__codelineno-8-139"></a>      <span class="nx">efsVolumeConfiguration</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-8-140" name="__codelineno-8-140"></a>        <span class="nx">fileSystemId</span>: <span class="kt">wordpress_efs.fileSystemId</span>
+<a id="__codelineno-8-141" name="__codelineno-8-141"></a>      <span class="p">}</span>
+<a id="__codelineno-8-142" name="__codelineno-8-142"></a>    <span class="p">})</span>
+<a id="__codelineno-8-143" name="__codelineno-8-143"></a>
+<a id="__codelineno-8-144" name="__codelineno-8-144"></a>    <span class="kd">const</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">findContainer</span><span class="p">(</span><span class="s1">&#39;wordpress&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-145" name="__codelineno-8-145"></a>    <span class="k">if</span> <span class="p">(</span><span class="nx">container</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-8-146" name="__codelineno-8-146"></a>      <span class="nx">container</span><span class="p">.</span><span class="nx">addMountPoints</span><span class="p">({</span>
+<a id="__codelineno-8-147" name="__codelineno-8-147"></a>        <span class="nx">containerPath</span><span class="o">:</span> <span class="s1">&#39;/var/www/html&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-148" name="__codelineno-8-148"></a>        <span class="nx">sourceVolume</span><span class="o">:</span> <span class="s1">&#39;wordpress-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-8-149" name="__codelineno-8-149"></a>        <span class="nx">readOnly</span>: <span class="kt">false</span>
+<a id="__codelineno-8-150" name="__codelineno-8-150"></a>      <span class="p">})</span>
+<a id="__codelineno-8-151" name="__codelineno-8-151"></a>    <span class="p">}</span>
+<a id="__codelineno-8-152" name="__codelineno-8-152"></a>
+<a id="__codelineno-8-153" name="__codelineno-8-153"></a>    <span class="nx">wordpress_efs</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowDefaultPortFrom</span><span class="p">(</span><span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">service</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>146-149行目<ul>
+<li>EFSを作成</li>
+</ul>
+</li>
+<li>151-156行目<ul>
+<li>EFSをタスク定義のボリュームとして指定</li>
+</ul>
+</li>
+<li>158-165行目<ul>
+<li>タスク定義として指定したボリュームをコンテナにマウント<br />
+  マウント先はコンテナイメージがVolumeで指定しているパス</li>
+</ul>
+</li>
+<li>167行目<ul>
+<li>wordpressサービスからEFSへのアクセスを許可</li>
+</ul>
+</li>
+</ul>
+<p>ELBの設定を少しだけ追加します。</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-169">169</a></span>
+<span class="normal"><a href="#__codelineno-9-170">170</a></span>
+<span class="normal"><a href="#__codelineno-9-171">171</a></span>
+<span class="normal"><a href="#__codelineno-9-172">172</a></span>
+<span class="normal"><a href="#__codelineno-9-173">173</a></span>
+<span class="normal"><a href="#__codelineno-9-174">174</a></span>
+<span class="normal"><a href="#__codelineno-9-175">175</a></span>
+<span class="normal"><a href="#__codelineno-9-176">176</a></span>
+<span class="normal"><a href="#__codelineno-9-177">177</a></span>
+<span class="normal"><a href="#__codelineno-9-178">178</a></span>
+<span class="normal"><a href="#__codelineno-9-179">179</a></span>
+<span class="normal"><a href="#__codelineno-9-180">180</a></span>
+<span class="normal"><a href="#__codelineno-9-181">181</a></span>
+<span class="normal"><a href="#__codelineno-9-182">182</a></span>
+<span class="normal"><a href="#__codelineno-9-183">183</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-9-169" name="__codelineno-9-169"></a>    <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">targetGroup</span><span class="p">.</span><span class="nx">configureHealthCheck</span><span class="p">({</span> <span class="nx">healthyHttpCodes</span><span class="o">:</span> <span class="s2">&quot;200-399&quot;</span> <span class="p">})</span>
+<a id="__codelineno-9-170" name="__codelineno-9-170"></a>
+<a id="__codelineno-9-171" name="__codelineno-9-171"></a>    <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">loadBalancer</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">listener</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<a id="__codelineno-9-172" name="__codelineno-9-172"></a>      <span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationListenerRule</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;redirect_rule_&#39;</span> <span class="o">+</span> <span class="nx">listener</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">defaultPort</span><span class="o">!</span><span class="p">.</span><span class="nx">toString</span><span class="p">(),</span> <span class="p">{</span>
+<a id="__codelineno-9-173" name="__codelineno-9-173"></a>        <span class="nx">listener</span>: <span class="kt">listener</span><span class="p">,</span>
+<a id="__codelineno-9-174" name="__codelineno-9-174"></a>        <span class="nx">priority</span>: <span class="kt">10</span><span class="p">,</span>
+<a id="__codelineno-9-175" name="__codelineno-9-175"></a>        <span class="nx">conditions</span><span class="o">:</span> <span class="p">[</span>
+<a id="__codelineno-9-176" name="__codelineno-9-176"></a>          <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ListenerCondition</span><span class="p">.</span><span class="nx">hostHeaders</span><span class="p">(</span>
+<a id="__codelineno-9-177" name="__codelineno-9-177"></a>            <span class="p">[</span><span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">loadBalancer</span><span class="p">.</span><span class="nx">loadBalancerDnsName</span><span class="p">])</span>
+<a id="__codelineno-9-178" name="__codelineno-9-178"></a>        <span class="p">],</span>
+<a id="__codelineno-9-179" name="__codelineno-9-179"></a>        <span class="nx">action</span>: <span class="kt">aws_elasticloadbalancingv2.ListenerAction.redirect</span><span class="p">({</span>
+<a id="__codelineno-9-180" name="__codelineno-9-180"></a>          <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;fargate.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-9-181" name="__codelineno-9-181"></a>        <span class="p">})</span>
+<a id="__codelineno-9-182" name="__codelineno-9-182"></a>      <span class="p">})</span>
+<a id="__codelineno-9-183" name="__codelineno-9-183"></a>    <span class="p">})</span>
+</code></pre></div>
+</td></tr></table>
+<ul>
+<li>169行目<ul>
+<li>WordPressは初期設定が完了するまでレスポンスコードが302になります。そのためヘルスチェックをクリアさせるためにチェック対象のレスポンスコードを変更しています。</li>
+</ul>
+</li>
+<li>171-183行目<ul>
+<li>（オプション）AWSが生成するELBの名前の場合に、独自ドメインにリダイレクトする設定を追加</li>
+</ul>
+</li>
+</ul>
+<p>最後にmysqlサービスへwordpressサービスからのアクセスを許可する設定です</p>
+<table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-185">185</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-10-185" name="__codelineno-10-185"></a>    <span class="nx">mysql_service</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowFrom</span><span class="p">(</span><span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">service</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Port</span><span class="p">.</span><span class="nx">allTcp</span><span class="p">())</span>
+</code></pre></div>
+</td></tr></table>
+<p>これで完成です。</p>
+<p>CloudFrontの追加もチャレンジしてみてください。</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>今回はRDSを使わず、データベースもFargateで構成しました。利用用途次第でこのような構成もアリではないでしょうか？</p>
+</div>
+<h2 id="_2">ソースコード</h2>
+<details class="abstract">
+<summary>ソースコード</summary>
+<div class="highlight"><span class="filename">wordpress-docker-cdk/lib/wordpress-docker-cdk-stack.ts</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">aws_certificatemanager</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">,</span> <span class="nx">aws_ecs</span><span class="p">,</span> <span class="nx">aws_ecs_patterns</span><span class="p">,</span> <span class="nx">aws_efs</span><span class="p">,</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">,</span> <span class="nx">aws_rds</span><span class="p">,</span> <span class="nx">aws_route53</span><span class="p">,</span> <span class="nx">aws_secretsmanager</span><span class="p">,</span> <span class="nx">RemovalPolicy</span><span class="p">,</span> <span class="nx">Stack</span><span class="p">,</span> <span class="nx">StackProps</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;aws-cdk-lib&#39;</span><span class="p">;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">import</span> <span class="p">{</span> <span class="nx">Construct</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;constructs&#39;</span><span class="p">;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="k">export</span> <span class="kd">class</span> <span class="nx">WordpressDockerCdkStack</span> <span class="k">extends</span> <span class="nx">Stack</span> <span class="p">{</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>  <span class="kr">constructor</span><span class="p">(</span><span class="nx">scope</span>: <span class="kt">Construct</span><span class="p">,</span> <span class="nx">id</span>: <span class="kt">string</span><span class="p">,</span> <span class="nx">props?</span>: <span class="kt">StackProps</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="k">super</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="kd">const</span> <span class="nx">vpc</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Vpc</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;vpc&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">natGateways</span>: <span class="kt">0</span> <span class="p">})</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>    <span class="kd">const</span> <span class="nx">cluster</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Cluster</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>      <span class="nx">enableFargateCapacityProviders</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>      <span class="nx">defaultCloudMapNamespace</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;my-wordpress&#39;</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>      <span class="p">}</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="p">})</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    <span class="c1">// MySQL</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>    <span class="kd">const</span> <span class="nx">mysql_secret</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_secretsmanager</span><span class="p">.</span><span class="nx">Secret</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>      <span class="nx">generateSecretString</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a>        <span class="nx">secretStringTemplate</span>: <span class="kt">JSON.stringify</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="nx">dbname</span><span class="o">:</span> <span class="s1">&#39;wordpress&#39;</span> <span class="p">}),</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>        <span class="nx">generateStringKey</span><span class="o">:</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>        <span class="nx">excludePunctuation</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>      <span class="p">}</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>    <span class="p">})</span>
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a>
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a>    <span class="kd">const</span> <span class="nx">mysql_service</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">FargateService</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;mysql-service&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>      <span class="nx">cluster</span>: <span class="kt">cluster</span><span class="p">,</span>
+<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a>      <span class="nx">serviceName</span><span class="o">:</span> <span class="s1">&#39;mysql_service&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a>
+<a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>      <span class="nx">taskDefinition</span>: <span class="kt">new</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">FargateTaskDefinition</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;mysql-task&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>
+<a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>      <span class="nx">assignPublicIp</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a>
+<a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a>      <span class="nx">cloudMapOptions</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a>        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;mysql&#39;</span>
+<a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a>      <span class="p">},</span>
+<a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a>
+<a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a>      <span class="nx">capacityProviderStrategies</span><span class="o">:</span> <span class="p">[</span>
+<a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a>        <span class="p">{</span>
+<a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a>          <span class="nx">capacityProvider</span><span class="o">:</span> <span class="s2">&quot;FARGATE_SPOT&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a>          <span class="nx">base</span>: <span class="kt">1</span><span class="p">,</span>
+<a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a>          <span class="nx">weight</span>: <span class="kt">1</span><span class="p">,</span>
+<a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a>        <span class="p">}</span>
+<a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a>      <span class="p">]</span>
+<a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a>    <span class="p">})</span>
+<a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a>
+<a id="__codelineno-11-51" name="__codelineno-11-51" href="#__codelineno-11-51"></a>    <span class="kd">const</span> <span class="nx">mysql_container</span> <span class="o">=</span> <span class="nx">mysql_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">addContainer</span><span class="p">(</span><span class="s1">&#39;mysql-container&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-52" name="__codelineno-11-52" href="#__codelineno-11-52"></a>      <span class="nx">image</span>: <span class="kt">aws_ecs.ContainerImage.fromRegistry</span><span class="p">(</span><span class="s1">&#39;mysql&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-53" name="__codelineno-11-53" href="#__codelineno-11-53"></a>      <span class="nx">environment</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-54" name="__codelineno-11-54" href="#__codelineno-11-54"></a>        <span class="s2">&quot;MYSQL_RANDOM_ROOT_PASSWORD&quot;</span><span class="o">:</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-55" name="__codelineno-11-55" href="#__codelineno-11-55"></a>      <span class="p">},</span>
+<a id="__codelineno-11-56" name="__codelineno-11-56" href="#__codelineno-11-56"></a>      <span class="nx">secrets</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-57" name="__codelineno-11-57" href="#__codelineno-11-57"></a>        <span class="s2">&quot;MYSQL_USER&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-58" name="__codelineno-11-58" href="#__codelineno-11-58"></a>        <span class="s2">&quot;MYSQL_PASSWORD&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-59" name="__codelineno-11-59" href="#__codelineno-11-59"></a>        <span class="s2">&quot;MYSQL_DATABASE&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;dbname&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-60" name="__codelineno-11-60" href="#__codelineno-11-60"></a>      <span class="p">},</span>
+<a id="__codelineno-11-61" name="__codelineno-11-61" href="#__codelineno-11-61"></a>      <span class="nx">logging</span>: <span class="kt">aws_ecs.LogDriver.awsLogs</span><span class="p">({</span> <span class="nx">streamPrefix</span><span class="o">:</span> <span class="s1">&#39;mysql-service&#39;</span> <span class="p">})</span>
+<a id="__codelineno-11-62" name="__codelineno-11-62" href="#__codelineno-11-62"></a>    <span class="p">})</span>
+<a id="__codelineno-11-63" name="__codelineno-11-63" href="#__codelineno-11-63"></a>
+<a id="__codelineno-11-64" name="__codelineno-11-64" href="#__codelineno-11-64"></a>    <span class="kd">const</span> <span class="nx">mysql_efs</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_efs</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;mysql-efs&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-65" name="__codelineno-11-65" href="#__codelineno-11-65"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-11-66" name="__codelineno-11-66" href="#__codelineno-11-66"></a>      <span class="nx">removalPolicy</span>: <span class="kt">RemovalPolicy.DESTROY</span>
+<a id="__codelineno-11-67" name="__codelineno-11-67" href="#__codelineno-11-67"></a>    <span class="p">})</span>
+<a id="__codelineno-11-68" name="__codelineno-11-68" href="#__codelineno-11-68"></a>
+<a id="__codelineno-11-69" name="__codelineno-11-69" href="#__codelineno-11-69"></a>    <span class="nx">mysql_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">addVolume</span><span class="p">({</span>
+<a id="__codelineno-11-70" name="__codelineno-11-70" href="#__codelineno-11-70"></a>      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;mysql-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-71" name="__codelineno-11-71" href="#__codelineno-11-71"></a>      <span class="nx">efsVolumeConfiguration</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-72" name="__codelineno-11-72" href="#__codelineno-11-72"></a>        <span class="nx">fileSystemId</span>: <span class="kt">mysql_efs.fileSystemId</span>
+<a id="__codelineno-11-73" name="__codelineno-11-73" href="#__codelineno-11-73"></a>      <span class="p">}</span>
+<a id="__codelineno-11-74" name="__codelineno-11-74" href="#__codelineno-11-74"></a>    <span class="p">})</span>
+<a id="__codelineno-11-75" name="__codelineno-11-75" href="#__codelineno-11-75"></a>
+<a id="__codelineno-11-76" name="__codelineno-11-76" href="#__codelineno-11-76"></a>    <span class="nx">mysql_container</span><span class="p">.</span><span class="nx">addMountPoints</span><span class="p">({</span>
+<a id="__codelineno-11-77" name="__codelineno-11-77" href="#__codelineno-11-77"></a>      <span class="nx">containerPath</span><span class="o">:</span> <span class="s1">&#39;/var/lib/mysql&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-78" name="__codelineno-11-78" href="#__codelineno-11-78"></a>      <span class="nx">sourceVolume</span><span class="o">:</span> <span class="s1">&#39;mysql-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-79" name="__codelineno-11-79" href="#__codelineno-11-79"></a>      <span class="nx">readOnly</span>: <span class="kt">false</span>
+<a id="__codelineno-11-80" name="__codelineno-11-80" href="#__codelineno-11-80"></a>    <span class="p">})</span>
+<a id="__codelineno-11-81" name="__codelineno-11-81" href="#__codelineno-11-81"></a>
+<a id="__codelineno-11-82" name="__codelineno-11-82" href="#__codelineno-11-82"></a>    <span class="nx">mysql_efs</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowDefaultPortFrom</span><span class="p">(</span><span class="nx">mysql_service</span><span class="p">)</span>
+<a id="__codelineno-11-83" name="__codelineno-11-83" href="#__codelineno-11-83"></a>
+<a id="__codelineno-11-84" name="__codelineno-11-84" href="#__codelineno-11-84"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-11-85" name="__codelineno-11-85" href="#__codelineno-11-85"></a>    <span class="c1">// WordPress</span>
+<a id="__codelineno-11-86" name="__codelineno-11-86" href="#__codelineno-11-86"></a>    <span class="c1">// *****</span>
+<a id="__codelineno-11-87" name="__codelineno-11-87" href="#__codelineno-11-87"></a>
+<a id="__codelineno-11-88" name="__codelineno-11-88" href="#__codelineno-11-88"></a>    <span class="kd">const</span> <span class="nx">hostedZone</span> <span class="o">=</span> <span class="nx">aws_route53</span><span class="p">.</span><span class="nx">HostedZone</span><span class="p">.</span><span class="nx">fromHostedZoneAttributes</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;hostedzone&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-89" name="__codelineno-11-89" href="#__codelineno-11-89"></a>      <span class="nx">hostedZoneId</span><span class="o">:</span> <span class="s1">&#39;Z0364500207RRL1KGDBUZ&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-90" name="__codelineno-11-90" href="#__codelineno-11-90"></a>      <span class="nx">zoneName</span><span class="o">:</span> <span class="s1">&#39;wordpress-cdk.tk&#39;</span>
+<a id="__codelineno-11-91" name="__codelineno-11-91" href="#__codelineno-11-91"></a>    <span class="p">})</span>
+<a id="__codelineno-11-92" name="__codelineno-11-92" href="#__codelineno-11-92"></a>
+<a id="__codelineno-11-93" name="__codelineno-11-93" href="#__codelineno-11-93"></a>    <span class="kd">const</span> <span class="nx">wordpress_service</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_ecs_patterns</span><span class="p">.</span><span class="nx">ApplicationLoadBalancedFargateService</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;wordpress-service&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-94" name="__codelineno-11-94" href="#__codelineno-11-94"></a>      <span class="nx">cluster</span>: <span class="kt">cluster</span><span class="p">,</span>
+<a id="__codelineno-11-95" name="__codelineno-11-95" href="#__codelineno-11-95"></a>      <span class="nx">serviceName</span><span class="o">:</span> <span class="s1">&#39;wordpress-service&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-96" name="__codelineno-11-96" href="#__codelineno-11-96"></a>
+<a id="__codelineno-11-97" name="__codelineno-11-97" href="#__codelineno-11-97"></a>      <span class="nx">taskImageOptions</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-98" name="__codelineno-11-98" href="#__codelineno-11-98"></a>        <span class="nx">image</span>: <span class="kt">aws_ecs.ContainerImage.fromRegistry</span><span class="p">(</span><span class="s1">&#39;wordpress&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-99" name="__codelineno-11-99" href="#__codelineno-11-99"></a>        <span class="nx">containerName</span><span class="o">:</span> <span class="s1">&#39;wordpress&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-100" name="__codelineno-11-100" href="#__codelineno-11-100"></a>        <span class="nx">containerPort</span>: <span class="kt">80</span><span class="p">,</span>
+<a id="__codelineno-11-101" name="__codelineno-11-101" href="#__codelineno-11-101"></a>
+<a id="__codelineno-11-102" name="__codelineno-11-102" href="#__codelineno-11-102"></a>        <span class="nx">environment</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-103" name="__codelineno-11-103" href="#__codelineno-11-103"></a>          <span class="s2">&quot;WORDPRESS_TABLE_PREFIX&quot;</span><span class="o">:</span> <span class="s2">&quot;wp_&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-104" name="__codelineno-11-104" href="#__codelineno-11-104"></a>          <span class="s2">&quot;WORDPRESS_DB_HOST&quot;</span><span class="o">:</span> <span class="s1">&#39;mysql.my-wordpress&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-105" name="__codelineno-11-105" href="#__codelineno-11-105"></a>        <span class="p">},</span>
+<a id="__codelineno-11-106" name="__codelineno-11-106" href="#__codelineno-11-106"></a>
+<a id="__codelineno-11-107" name="__codelineno-11-107" href="#__codelineno-11-107"></a>        <span class="nx">secrets</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-108" name="__codelineno-11-108" href="#__codelineno-11-108"></a>          <span class="s2">&quot;WORDPRESS_DB_USER&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-109" name="__codelineno-11-109" href="#__codelineno-11-109"></a>          <span class="s2">&quot;WORDPRESS_DB_PASSWORD&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-110" name="__codelineno-11-110" href="#__codelineno-11-110"></a>          <span class="s2">&quot;WORDPRESS_DB_NAME&quot;</span><span class="o">:</span> <span class="nx">aws_ecs</span><span class="p">.</span><span class="nx">Secret</span><span class="p">.</span><span class="nx">fromSecretsManager</span><span class="p">(</span><span class="nx">mysql_secret</span><span class="p">,</span> <span class="s1">&#39;dbname&#39;</span><span class="p">),</span>
+<a id="__codelineno-11-111" name="__codelineno-11-111" href="#__codelineno-11-111"></a>        <span class="p">},</span>
+<a id="__codelineno-11-112" name="__codelineno-11-112" href="#__codelineno-11-112"></a>      <span class="p">},</span>
+<a id="__codelineno-11-113" name="__codelineno-11-113" href="#__codelineno-11-113"></a>
+<a id="__codelineno-11-114" name="__codelineno-11-114" href="#__codelineno-11-114"></a>      <span class="nx">domainZone</span>: <span class="kt">hostedZone</span><span class="p">,</span>
+<a id="__codelineno-11-115" name="__codelineno-11-115" href="#__codelineno-11-115"></a>      <span class="nx">domainName</span><span class="o">:</span> <span class="s1">&#39;fargate.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-116" name="__codelineno-11-116" href="#__codelineno-11-116"></a>
+<a id="__codelineno-11-117" name="__codelineno-11-117" href="#__codelineno-11-117"></a>      <span class="nx">certificate</span>: <span class="kt">new</span> <span class="nx">aws_certificatemanager</span><span class="p">.</span><span class="nx">Certificate</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;cert&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-118" name="__codelineno-11-118" href="#__codelineno-11-118"></a>        <span class="nx">domainName</span><span class="o">:</span> <span class="s1">&#39;fargate.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-119" name="__codelineno-11-119" href="#__codelineno-11-119"></a>        <span class="nx">validation</span>: <span class="kt">aws_certificatemanager.CertificateValidation.fromDns</span><span class="p">(</span><span class="nx">hostedZone</span><span class="p">)</span>
+<a id="__codelineno-11-120" name="__codelineno-11-120" href="#__codelineno-11-120"></a>      <span class="p">}),</span>
+<a id="__codelineno-11-121" name="__codelineno-11-121" href="#__codelineno-11-121"></a>
+<a id="__codelineno-11-122" name="__codelineno-11-122" href="#__codelineno-11-122"></a>      <span class="nx">protocol</span>: <span class="kt">aws_elasticloadbalancingv2.ApplicationProtocol.HTTPS</span><span class="p">,</span>
+<a id="__codelineno-11-123" name="__codelineno-11-123" href="#__codelineno-11-123"></a>      <span class="nx">redirectHTTP</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-11-124" name="__codelineno-11-124" href="#__codelineno-11-124"></a>
+<a id="__codelineno-11-125" name="__codelineno-11-125" href="#__codelineno-11-125"></a>      <span class="nx">assignPublicIp</span>: <span class="kt">true</span><span class="p">,</span>
+<a id="__codelineno-11-126" name="__codelineno-11-126" href="#__codelineno-11-126"></a>
+<a id="__codelineno-11-127" name="__codelineno-11-127" href="#__codelineno-11-127"></a>      <span class="nx">cloudMapOptions</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-128" name="__codelineno-11-128" href="#__codelineno-11-128"></a>        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;wordpress&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-129" name="__codelineno-11-129" href="#__codelineno-11-129"></a>      <span class="p">},</span>
+<a id="__codelineno-11-130" name="__codelineno-11-130" href="#__codelineno-11-130"></a>    <span class="p">})</span>
+<a id="__codelineno-11-131" name="__codelineno-11-131" href="#__codelineno-11-131"></a>
+<a id="__codelineno-11-132" name="__codelineno-11-132" href="#__codelineno-11-132"></a>    <span class="kd">const</span> <span class="nx">autoscale_task</span> <span class="o">=</span> <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">service</span><span class="p">.</span><span class="nx">autoScaleTaskCount</span><span class="p">({</span>
+<a id="__codelineno-11-133" name="__codelineno-11-133" href="#__codelineno-11-133"></a>      <span class="nx">minCapacity</span>: <span class="kt">1</span><span class="p">,</span>
+<a id="__codelineno-11-134" name="__codelineno-11-134" href="#__codelineno-11-134"></a>      <span class="nx">maxCapacity</span>: <span class="kt">10</span>
+<a id="__codelineno-11-135" name="__codelineno-11-135" href="#__codelineno-11-135"></a>    <span class="p">})</span>
+<a id="__codelineno-11-136" name="__codelineno-11-136" href="#__codelineno-11-136"></a>
+<a id="__codelineno-11-137" name="__codelineno-11-137" href="#__codelineno-11-137"></a>    <span class="nx">autoscale_task</span><span class="p">.</span><span class="nx">scaleOnCpuUtilization</span><span class="p">(</span><span class="s1">&#39;cpu_scaling&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-138" name="__codelineno-11-138" href="#__codelineno-11-138"></a>      <span class="nx">targetUtilizationPercent</span>: <span class="kt">50</span>
+<a id="__codelineno-11-139" name="__codelineno-11-139" href="#__codelineno-11-139"></a>    <span class="p">})</span>
+<a id="__codelineno-11-140" name="__codelineno-11-140" href="#__codelineno-11-140"></a>
+<a id="__codelineno-11-141" name="__codelineno-11-141" href="#__codelineno-11-141"></a>    <span class="nx">autoscale_task</span><span class="p">.</span><span class="nx">scaleOnRequestCount</span><span class="p">(</span><span class="s1">&#39;request_scaling&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-142" name="__codelineno-11-142" href="#__codelineno-11-142"></a>      <span class="nx">targetGroup</span>: <span class="kt">wordpress_service.targetGroup</span><span class="p">,</span>
+<a id="__codelineno-11-143" name="__codelineno-11-143" href="#__codelineno-11-143"></a>      <span class="nx">requestsPerTarget</span>: <span class="kt">1000</span>
+<a id="__codelineno-11-144" name="__codelineno-11-144" href="#__codelineno-11-144"></a>    <span class="p">})</span>
+<a id="__codelineno-11-145" name="__codelineno-11-145" href="#__codelineno-11-145"></a>
+<a id="__codelineno-11-146" name="__codelineno-11-146" href="#__codelineno-11-146"></a>    <span class="kd">const</span> <span class="nx">wordpress_efs</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">aws_efs</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;efs&#39;</span><span class="p">,</span> <span class="p">{</span>
+<a id="__codelineno-11-147" name="__codelineno-11-147" href="#__codelineno-11-147"></a>      <span class="nx">vpc</span>: <span class="kt">vpc</span><span class="p">,</span>
+<a id="__codelineno-11-148" name="__codelineno-11-148" href="#__codelineno-11-148"></a>      <span class="nx">removalPolicy</span>: <span class="kt">RemovalPolicy.DESTROY</span>
+<a id="__codelineno-11-149" name="__codelineno-11-149" href="#__codelineno-11-149"></a>    <span class="p">})</span>
+<a id="__codelineno-11-150" name="__codelineno-11-150" href="#__codelineno-11-150"></a>
+<a id="__codelineno-11-151" name="__codelineno-11-151" href="#__codelineno-11-151"></a>    <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">addVolume</span><span class="p">({</span>
+<a id="__codelineno-11-152" name="__codelineno-11-152" href="#__codelineno-11-152"></a>      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;wordpress-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-153" name="__codelineno-11-153" href="#__codelineno-11-153"></a>      <span class="nx">efsVolumeConfiguration</span><span class="o">:</span> <span class="p">{</span>
+<a id="__codelineno-11-154" name="__codelineno-11-154" href="#__codelineno-11-154"></a>        <span class="nx">fileSystemId</span>: <span class="kt">wordpress_efs.fileSystemId</span>
+<a id="__codelineno-11-155" name="__codelineno-11-155" href="#__codelineno-11-155"></a>      <span class="p">}</span>
+<a id="__codelineno-11-156" name="__codelineno-11-156" href="#__codelineno-11-156"></a>    <span class="p">})</span>
+<a id="__codelineno-11-157" name="__codelineno-11-157" href="#__codelineno-11-157"></a>
+<a id="__codelineno-11-158" name="__codelineno-11-158" href="#__codelineno-11-158"></a>    <span class="kd">const</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">taskDefinition</span><span class="p">.</span><span class="nx">findContainer</span><span class="p">(</span><span class="s1">&#39;wordpress&#39;</span><span class="p">)</span>
+<a id="__codelineno-11-159" name="__codelineno-11-159" href="#__codelineno-11-159"></a>    <span class="k">if</span> <span class="p">(</span><span class="nx">container</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-11-160" name="__codelineno-11-160" href="#__codelineno-11-160"></a>      <span class="nx">container</span><span class="p">.</span><span class="nx">addMountPoints</span><span class="p">({</span>
+<a id="__codelineno-11-161" name="__codelineno-11-161" href="#__codelineno-11-161"></a>        <span class="nx">containerPath</span><span class="o">:</span> <span class="s1">&#39;/var/www/html&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-162" name="__codelineno-11-162" href="#__codelineno-11-162"></a>        <span class="nx">sourceVolume</span><span class="o">:</span> <span class="s1">&#39;wordpress-efs&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-163" name="__codelineno-11-163" href="#__codelineno-11-163"></a>        <span class="nx">readOnly</span>: <span class="kt">false</span>
+<a id="__codelineno-11-164" name="__codelineno-11-164" href="#__codelineno-11-164"></a>      <span class="p">})</span>
+<a id="__codelineno-11-165" name="__codelineno-11-165" href="#__codelineno-11-165"></a>    <span class="p">}</span>
+<a id="__codelineno-11-166" name="__codelineno-11-166" href="#__codelineno-11-166"></a>
+<a id="__codelineno-11-167" name="__codelineno-11-167" href="#__codelineno-11-167"></a>    <span class="nx">wordpress_efs</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowDefaultPortFrom</span><span class="p">(</span><span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">service</span><span class="p">)</span>
+<a id="__codelineno-11-168" name="__codelineno-11-168" href="#__codelineno-11-168"></a>
+<a id="__codelineno-11-169" name="__codelineno-11-169" href="#__codelineno-11-169"></a>    <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">targetGroup</span><span class="p">.</span><span class="nx">configureHealthCheck</span><span class="p">({</span> <span class="nx">healthyHttpCodes</span><span class="o">:</span> <span class="s2">&quot;200-399&quot;</span> <span class="p">})</span>
+<a id="__codelineno-11-170" name="__codelineno-11-170" href="#__codelineno-11-170"></a>
+<a id="__codelineno-11-171" name="__codelineno-11-171" href="#__codelineno-11-171"></a>    <span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">loadBalancer</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">listener</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<a id="__codelineno-11-172" name="__codelineno-11-172" href="#__codelineno-11-172"></a>      <span class="ow">new</span> <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ApplicationListenerRule</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;redirect_rule_&#39;</span> <span class="o">+</span> <span class="nx">listener</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">defaultPort</span><span class="o">!</span><span class="p">.</span><span class="nx">toString</span><span class="p">(),</span> <span class="p">{</span>
+<a id="__codelineno-11-173" name="__codelineno-11-173" href="#__codelineno-11-173"></a>        <span class="nx">listener</span>: <span class="kt">listener</span><span class="p">,</span>
+<a id="__codelineno-11-174" name="__codelineno-11-174" href="#__codelineno-11-174"></a>        <span class="nx">priority</span>: <span class="kt">10</span><span class="p">,</span>
+<a id="__codelineno-11-175" name="__codelineno-11-175" href="#__codelineno-11-175"></a>        <span class="nx">conditions</span><span class="o">:</span> <span class="p">[</span>
+<a id="__codelineno-11-176" name="__codelineno-11-176" href="#__codelineno-11-176"></a>          <span class="nx">aws_elasticloadbalancingv2</span><span class="p">.</span><span class="nx">ListenerCondition</span><span class="p">.</span><span class="nx">hostHeaders</span><span class="p">(</span>
+<a id="__codelineno-11-177" name="__codelineno-11-177" href="#__codelineno-11-177"></a>            <span class="p">[</span><span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">loadBalancer</span><span class="p">.</span><span class="nx">loadBalancerDnsName</span><span class="p">])</span>
+<a id="__codelineno-11-178" name="__codelineno-11-178" href="#__codelineno-11-178"></a>        <span class="p">],</span>
+<a id="__codelineno-11-179" name="__codelineno-11-179" href="#__codelineno-11-179"></a>        <span class="nx">action</span>: <span class="kt">aws_elasticloadbalancingv2.ListenerAction.redirect</span><span class="p">({</span>
+<a id="__codelineno-11-180" name="__codelineno-11-180" href="#__codelineno-11-180"></a>          <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;fargate.wordpress-cdk.tk&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-181" name="__codelineno-11-181" href="#__codelineno-11-181"></a>        <span class="p">})</span>
+<a id="__codelineno-11-182" name="__codelineno-11-182" href="#__codelineno-11-182"></a>      <span class="p">})</span>
+<a id="__codelineno-11-183" name="__codelineno-11-183" href="#__codelineno-11-183"></a>    <span class="p">})</span>
+<a id="__codelineno-11-184" name="__codelineno-11-184" href="#__codelineno-11-184"></a>
+<a id="__codelineno-11-185" name="__codelineno-11-185" href="#__codelineno-11-185"></a>    <span class="nx">mysql_service</span><span class="p">.</span><span class="nx">connections</span><span class="p">.</span><span class="nx">allowFrom</span><span class="p">(</span><span class="nx">wordpress_service</span><span class="p">.</span><span class="nx">service</span><span class="p">,</span> <span class="nx">aws_ec2</span><span class="p">.</span><span class="nx">Port</span><span class="p">.</span><span class="nx">allTcp</span><span class="p">())</span>
+<a id="__codelineno-11-186" name="__codelineno-11-186" href="#__codelineno-11-186"></a>
+<a id="__codelineno-11-187" name="__codelineno-11-187" href="#__codelineno-11-187"></a>  <span class="p">}</span>
+<a id="__codelineno-11-188" name="__codelineno-11-188" href="#__codelineno-11-188"></a><span class="p">}</span>
+</code></pre></div>
+</details>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="フッター">
+      
+        
+        <a href="../finishing/" class="md-footer__link md-footer__link--prev" aria-label="前: 最後の仕上げ" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                前
+              </span>
+              最後の仕上げ
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/moritalous" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\u3000\u3001\u3002\uff0c\uff0e]+", "search.placeholder": "\u691c\u7d22", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      
+    
+  </body>
+</html>
